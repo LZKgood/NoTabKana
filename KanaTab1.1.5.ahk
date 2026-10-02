@@ -2,16 +2,13 @@
 #SingleInstance Force
 global isKanaMode := false ; 假名输入标记
 global pageMode := false   ; 翻页模式标记：按下=之后激活
-
 GetCurrentLangID() {
     hWnd := WinActive("A")
     ThreadId := DllCall("GetWindowThreadProcessId", "Ptr", hWnd, "Ptr", 0)
     Layout := DllCall("GetKeyboardLayout", "UInt", ThreadId, "Ptr")
     return Layout & 0xFFFF
 }
-
 #HotIf GetCurrentLangID() = 1041
-
 ; ========== 字母a-z：按下开启假名模式，关闭翻页模式 ==========
 $a:: {
     global isKanaMode := true
@@ -143,7 +140,6 @@ $z:: {
     global pageMode := false
     SendEvent "z"
 }
-
 ; ========== 数字键：选词，选词完成后关闭pageMode和isKanaMode ==========
 $1:: {
     global isKanaMode
@@ -245,32 +241,30 @@ $0:: {
     }
     SendEvent "0"
 }
-
-; ========== = 等号：只有在假名输入状态才执行翻页，否则输出等号 ==========
+; ========== = 等号：只有首次进入翻页模式才发送Tab ==========
 $=:: {
-    global isKanaMode
+    global isKanaMode, pageMode
     if isKanaMode {
-        global pageMode := true ; 按下等号，开启翻页模式
-        SendEvent "{Tab}"
-        Sleep 1
+        if (!pageMode) {
+            ; 第一次按=，还没进入翻页模式 → 发送Tab
+            SendEvent "{Tab}"
+            Sleep 1
+        }
+        global pageMode := true ; 开启翻页模式
         SendEvent "{PgDn}"
     } else {
         SendEvent "=" ; 没有打假名，直接输出=号
     }
 }
-
 ; ========== - 减号：判断翻页模式 ==========
 $-:: {
     global pageMode
     if pageMode {
-        SendEvent "{Tab}"
-        Sleep 1
         SendEvent "{PgUp}"
     } else {
         SendEvent "-" ; 模式关闭 → 输出长音符号
     }
 }
-
 ; ========== Enter回车：行为等同于数字键，直接保留假名确认 ==========
 $Enter:: {
     global isKanaMode
@@ -282,5 +276,4 @@ $Enter:: {
     }
     SendEvent "{Enter}"
 }
-
 #HotIf
