@@ -146,7 +146,7 @@ $1:: {
     global pageMode := false ; 按数字选词，翻页模式重置
     if isKanaMode {
         SendEvent "{Tab}"
-        Sleep 1
+        Sleep 1.15
         global isKanaMode := false
     }
     SendEvent "1"
@@ -156,7 +156,7 @@ $2:: {
     global pageMode := false
     if isKanaMode {
         SendEvent "{Tab}"
-        Sleep 1
+        Sleep 1.15
         global isKanaMode := false
     }
     SendEvent "2"
@@ -166,7 +166,7 @@ $3:: {
     global pageMode := false
     if isKanaMode {
         SendEvent "{Tab}"
-        Sleep 1
+        Sleep 1.15
         global isKanaMode := false
     }
     SendEvent "3"
@@ -176,7 +176,7 @@ $4:: {
     global pageMode := false
     if isKanaMode {
         SendEvent "{Tab}"
-        Sleep 1
+        Sleep 1.15
         global isKanaMode := false
     }
     SendEvent "4"
@@ -186,7 +186,7 @@ $5:: {
     global pageMode := false
     if isKanaMode {
         SendEvent "{Tab}"
-        Sleep 1
+        Sleep 1.15
         global isKanaMode := false
     }
     SendEvent "5"
@@ -196,7 +196,7 @@ $6:: {
     global pageMode := false
     if isKanaMode {
         SendEvent "{Tab}"
-        Sleep 1
+        Sleep 1.15
         global isKanaMode := false
     }
     SendEvent "6"
@@ -206,7 +206,7 @@ $7:: {
     global pageMode := false
     if isKanaMode {
         SendEvent "{Tab}"
-        Sleep 1
+        Sleep 1.15
         global isKanaMode := false
     }
     SendEvent "7"
@@ -216,7 +216,7 @@ $8:: {
     global pageMode := false
     if isKanaMode {
         SendEvent "{Tab}"
-        Sleep 1
+        Sleep 1.15
         global isKanaMode := false
     }
     SendEvent "8"
@@ -226,7 +226,7 @@ $9:: {
     global pageMode := false
     if isKanaMode {
         SendEvent "{Tab}"
-        Sleep 1
+        Sleep 1.15
         global isKanaMode := false
     }
     SendEvent "9"
@@ -236,7 +236,7 @@ $0:: {
     global pageMode := false
     if isKanaMode {
         SendEvent "{Tab}"
-        Sleep 1
+        Sleep 1.15
         global isKanaMode := false
     }
     SendEvent "0"
@@ -248,7 +248,7 @@ $=:: {
         if (!pageMode) {
             ; 第一次按=，还没进入翻页模式 → 发送Tab
             SendEvent "{Tab}"
-            Sleep 1
+            Sleep 1.15
         }
         global pageMode := true ; 开启翻页模式
         SendEvent "{PgDn}"
@@ -265,13 +265,11 @@ $-:: {
         SendEvent "-" ; 模式关闭 → 输出长音符号
     }
 }
-; ========== Enter回车：行为等同于数字键，直接保留假名确认 ==========
+; ========== Enter回车：直接发送Enter，不再触发Tab ==========
 $Enter:: {
     global isKanaMode
     global pageMode := false
     if isKanaMode {
-        SendEvent "{Tab}"
-        Sleep 1
         global isKanaMode := false
     }
     SendEvent "{Enter}"
