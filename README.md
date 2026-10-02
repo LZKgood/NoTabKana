@@ -146,15 +146,6 @@ English:
 2. システムファイルを改変せず、キーボード入力イベントのみ監視します。
 3. 本スクリプトの使用によって生じた損害について作者は責任を負いません。
 
-## Known Issues / 既知の問題 / 已知问题
-English:
-Windows has no API to get the total number of candidate pages of IME, so page loop function cannot be implemented.
-
-日本語：
-IMEの候補ページ総数を取得するWindows APIが存在しないため、ページを循環させる機能は実装できません。
-
-中文：
-Windows没有可以读取IME候选总页数的API，无法实现翻页循环功能。
 
 ## Contribute / 貢献 / 贡献
 English:
