@@ -76,6 +76,32 @@ English:
 3. 双击ahk文件启动脚本
 4. 托盘出现AHK图标即运行成功
 
+## Installation / インストール手順 / 安装步骤
+English:
+1. Download and install AutoHotkey v2 from the [official website](https://www.autohotkey.com/).
+2. Download `KanaTap.ahk` from this repository to your local computer.
+3. Double-click `KanaTap.ahk` to launch the script.
+4. You will see the AutoHotkey icon in the system tray when running successfully.
+
+> Important notice: This script only works with Microsoft native Japanese IME on Windows. It will NOT work with Sogou, Google Japanese Input or other third-party input methods.
+
+日本語：
+1. [AutoHotkey公式サイト](https://www.autohotkey.com/) からAutoHotkey v2をダウンロードしインストールします。
+2. このリポジトリから `KanaTap.ahk` をダウンロードしてローカルPCに保存します。
+3. `KanaTap.ahk` をダブルクリックしてスクリプトを起動します。
+4. タスクトレイにAutoHotkeyのアイコンが表示されたら起動成功です。
+
+> 重要：本スクリプトはWindows標準のMicrosoft日本語IME専用です。搜狗やGoogle日本語入力などサードパーティ製IMEには対応していません。
+
+中文：
+1. 前往 [AutoHotkey官网](https://www.autohotkey.com/) 下载并安装 AutoHotkey v2。
+2. 在本仓库下载 `KanaTap.ahk` 保存到电脑本地。
+3. 双击 `KanaTap.ahk` 启动脚本。
+4. 托盘出现AutoHotkey图标，代表脚本运行成功。
+
+> ⚠️重要声明：该脚本**仅支持Windows系统自带微软日语输入法**，搜狗、谷歌日语输入法等第三方输入法无法使用。
+
+
 ## Configuration / 設定 / 自定义配置
 English:
 You can adjust key send interval by modifying `KEY_DELAY` at the top of script (Unit: ms).
