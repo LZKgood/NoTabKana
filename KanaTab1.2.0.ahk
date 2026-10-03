@@ -274,4 +274,10 @@ $Enter:: {
     }
     SendEvent "{Enter}"
 }
+; ========== Backspace：删除字符，并且重置翻页模式pageMode=false ==========
+$Backspace:: {
+    SendEvent "{Backspace}"
+    Sleep 1
+    global pageMode := false ;
+}
 #HotIf
