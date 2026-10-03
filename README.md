@@ -130,16 +130,29 @@ Short summary: You are free to use, modify and redistribute this software. The a
 - AutoHotkey v2：GNU GPLv2协议（由用户自行独立安装）
 
 ## Disclaimer / 免責事項 / 免责说明
-English:
-1. This tool depends on system environment, operation on all PCs is not guaranteed.
-2. It will not modify system files, only monitor keyboard input events.
-3. The author shall not be liable for any damage caused by using this script.
+【中文免责声明】
+本开源工具 KanaTap 仅供个人学习、研究、非商业体验使用。
+本软件依赖 Windows 系统输入法环境，作者不保证程序在所有设备、系统版本、输入法环境下完全兼容、稳定、无差错。
+本程序仅监听与转发键盘输入事件，不会篡改、覆盖、损坏任何系统文件与用户数据。
+使用者明确知悉：使用本脚本产生的一切后果、系统异常、配置变动、操作失误风险，均由使用者本人全权承担。
+作者不对因使用本工具导致的直接或间接损失、数据异常、设备故障、兼容性问题承担任何法律责任。
+本项目为开源免费项目，无任何担保、无售后、无义务更新，使用者需自行承担使用风险。
 
-日本語：
-1. 本ツールは環境依存のため、全てのPCで動作を保証するものではありません。
-2. システムファイルを改変せず、キーボード入力イベントのみ監視します。
-3. 本スクリプトの使用によって生じた損害について作者は責任を負いません。
+【English Disclaimer】
+KanaTap is an open-source tool for personal learning, research and non-commercial use only.
+This software depends on the Windows system input environment. The author does not guarantee full compatibility, stability or error-free operation on all devices, system versions or IME environments.
+This program only monitors and forwards keyboard input events. It will not modify, overwrite or damage any system files or user data.
+The user explicitly acknowledges that all consequences, system abnormalities, configuration changes and operational risks arising from the use of this script shall be borne solely by the user.
+The author shall not be liable for any direct or indirect loss, data abnormality, device failure or compatibility issues caused by using this tool.
+This project is free and open-source with no warranty, no after-sales service and no mandatory update obligation. All usage risks are undertaken by the user.
 
+【日本語 免責事項】
+本オープンソースツール KanaTap は、個人の学習・研究・非営利目的での利用に限ります。
+本ソフトウェアはWindowsの入力環境に依存するため、すべての機器・システムバージョン・IME環境で完全な互換性・安定性・無不具合を保証するものではありません。
+本プログラムはキーボード入力イベントの監視・転送のみを行い、システムファイルやユーザーデータを改変・破損することはありません。
+本ツールの使用によって生じるすべての結果、システム異常、設定変更、操作リスクは、利用者自身が全責任を負うものとします。
+作者は、本ツールの使用により発生した直接的・間接的な損失、データ異常、機器障害、互換性問題について、一切の責任を負いません。
+本プロジェクトは無料オープンソースであり、保証・サポート・強制アップデート義務はありません。すべての利用リスクは利用者が負担します。
 
 ## Contribute / 貢献 / 贡献
 English:
