@@ -18,25 +18,19 @@ English:
 - After typing romaji, pressing number key automatically sends Tab to confirm conversion candidate
 - `=` key: Page down for candidates, send Tab only on first page turn
 - `-` key: Page up for candidates when in page mode; outputs long vowel symbol 「ー」 normally outside page mode
-- ESC key: Reset all internal state of script to avoid logic error
 - Support Ctrl/Alt/Shift modifier keys, prevent misfire when copy & paste
-- Disable mouse hook, only listen keyboard, low resource consumption
 
 日本語：
 - ローマ字入力後、数字キーを押すと自動でTabを送信し変換候補を確定
 - `=` キー：変換候補を次ページへ送り、初回のみTabを送信
 - `-` キー：ページモード時は候補を前ページへ戻す、通常時は長音記号「ー」を出力
-- ESCキー：スクリプトの内部状態を全リセットし、論理異常を防止
-- Ctrl/Alt/Shift修飾キーに対応、コピー貼り付け時の誤動作を抑制
-- マウスフックを無効化、キーボードのみ監視でリソース消費が少ない
+- Ctrl/Alt/Shift修飾キーに対応、コピー貼り付け時の誤動作を抑制い
 
 中文：
 - 输入罗马音假名后，按下数字键自动发送Tab确认候选汉字
 - `=` 号：候选词向下翻页，仅第一次翻页发送Tab
 - `-` 号：翻页模式下向上翻页；普通输入状态输出长音符号「ー」
-- ESC键：清空脚本全部内部状态，防止逻辑错乱
 - 兼容Ctrl/Alt/Shift修饰快捷键，复制粘贴不会误触发假名模式
-- 禁用鼠标钩子，仅监听键盘，资源占用极低
 
 ## Operating Environment / 動作環境 / 运行环境
 English:
