@@ -96,19 +96,6 @@ English:
 > ⚠️重要声明：该脚本**仅支持Windows系统自带微软日语输入法**，搜狗、谷歌日语输入法等第三方输入法无法使用。
 
 
-## Configuration / 設定 / 自定义配置
-English:
-You can adjust key send interval by modifying `KEY_DELAY` at the top of script (Unit: ms).
-If timing problem occurs, try changing value to 2~5.
-
-日本語：
-スクリプト上部の `KEY_DELAY` でキー送信間隔を調整可能（単位：ms）。
-不具合が発生する場合は `2～5` に変更して試してください。
-
-中文：
-修改脚本头部 `KEY_DELAY` 调整按键间隔（单位：毫秒）。
-如果出现按键时序异常，可以改成2~5测试。
-
 ## License / ライセンス / 许可证
 English:
 This script is released under the MIT License.
