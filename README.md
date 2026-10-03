@@ -78,22 +78,6 @@ English:
 
 > ⚠️重要声明：该脚本**仅支持Windows系统自带微软日语输入法**，搜狗、谷歌日语输入法等第三方输入法无法使用。
 
-## Known Issues / 既知の問題 / 已知问题
-English:
-This script works at keyboard hook level. It cannot directly read the pre-edit text inside Microsoft Japanese IME.
-We use keystroke counting to estimate kana count. For combinations like `sya` / `shi` (multiple letters for one kana), the counter may lose sync.
-This is a limitation of external AutoHotkey scripts, not a bug.
-
-日本語：
-本スクリプトはキーボードフックレベルで動作しており、Microsoft日本語IME内部のプリエディットテキストを直接読み取ることはできません。
-キー入力回数で仮名の数を推定しているため、`sya`・`shi`のような複数文字で一つの仮名を構成する場合、カウンターがずれる可能性があります。
-これはAHK外部スクリプトの制限であり、不具合ではありません。
-
-中文：
-本脚本运行在键盘钩子层面，无法直接读取微软日语IME内部预编辑文本。
-我们依靠按键次数估算假名数量，遇到 `sya`、`shi` 这类多字母拼成单个假名的拗音场景，计数器会出现计数偏差。
-这属于AHK外部脚本的底层限制，并非程序Bug。
-
 ## License / ライセンス / 许可证
 English:
 This script is released under the MIT License.
