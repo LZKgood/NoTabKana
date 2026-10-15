@@ -3,9 +3,9 @@
 
 
 
-**NoTabKana — Windows Microsoft Japanese IME enhancement script built with AutoHotkey v2.**
-NoTabKana 是基于 AutoHotkey v2 开发的 Windows 微软日语输入法增强脚本，模拟 Mac 日语输入体验，解决微软日语IME选词时必须反复按Tab的痛点，自定义候选词翻页快捷键。
-NoTabKana は AutoHotkey v2 で作成されたWindows Microsoft日本語IME補助スクリプトです。Macライクな日本語入力環境を実現し、変換候補選択のためTabキーを何度も押す手間をなくします。
+- NoTabKana — Windows Microsoft Japanese IME enhancement script built with AutoHotkey v2.**
+- NoTabKana 是基于 AutoHotkey v2 开发的 Windows 微软日语输入法增强脚本，模拟 Mac 日语输入体验，解决微软日语IME选词时必须反复按Tab的痛点，自定义候选词翻页快捷键。
+- NoTabKana は AutoHotkey v2 で作成されたWindows Microsoft日本語IME補助スクリプトです。Macライクな日本語入力環境を実現し、変換候補選択のためTabキーを何度も押す手間をなくします。
 
 ## Demo / 動作例 / 演示
 - ローマ字でかな入力後、数字キーを押すと自動でTab送信し候補を選択
