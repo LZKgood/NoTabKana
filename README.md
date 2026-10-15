@@ -1,19 +1,22 @@
-# NoTabKana
-
-
-
-
+### NoTabKana
+##Overview｜概要｜简介
 - NoTabKana — Windows Microsoft Japanese IME enhancement script built with AutoHotkey v2.**
 - NoTabKana 是基于 AutoHotkey v2 开发的 Windows 微软日语输入法增强脚本，模拟 Mac 日语输入体验，解决微软日语IME选词时必须反复按Tab的痛点，自定义候选词翻页快捷键。
 - NoTabKana は AutoHotkey v2 で作成されたWindows Microsoft日本語IME補助スクリプトです。Macライクな日本語入力環境を実現し、変換候補選択のためTabキーを何度も押す手間をなくします。
 
 ## Demo / 動作例 / 演示
-- ローマ字でかな入力後、数字キーを押すと自動でTab送信し候補を選択
-- `=` キー：候補ページ送り（初回のみTab送信）
-- `-` キー：候補ページ戻し、通常時は長音「ー」を出力
-- Ctrl/Alt/Shift修飾キーに対応。コピー・貼り付け時誤動作しない
+ 演示｜デモ｜Demo
+**中文**
+例1（普通汉字）：切换日语罗马音IME，输入`kawa`，按数字`1`选中「川」。
+例2（带長音符ー+翻页）：输入`bi`，按`-`输出长音符「ー」得到「ビー」，继续输入`ru`。如果当前页面找不到目标词，按`=`切换到下一页候选；按`-`返回上一页，找到后按数字`1`选中「ビール」。
 
-输入罗马音假名 → 调出候选列表 → `=` 向下翻页、`-`向上翻页，按下数字键直接选中候选。Windows 上实现接近 Mac 的日语输入体验，告别重复敲击 Tab。
+**日本語**
+例1（通常漢字）：日本語ローマ字IMEに切替、`kawa`入力後数字`1`で「川」を選択。
+例2（長音符ー付き＋ページ送り）：`bi`入力、`-`キーで長音符「ー」を出力し「ビー」、続けて`ru`を入力。目的の単語が現在のページにない場合、`=`で次の候補ページへ移動。`-`で前ページに戻り、見つけたら数字`1`で「ビール」を選択。
+
+**English**
+Example1 (Normal kanji): Switch to Japanese romaji IME. Type `kawa`, press `1` to select kanji「川」.
+Example2 (With chōonpu ー + page turn): Type `bi`, press `-` to output long vowel mark「ー」to get「ビー」, then type `ru`. If the target word is not on the current page, press `=` to go to the next candidate page. Press `-` to return to the previous page, then press `1` to select「ビール」.
 
 ## Main Features / 主な機能 / 主要功能
 English:
