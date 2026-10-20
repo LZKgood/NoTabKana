@@ -1,262 +1,620 @@
 # NoTabKana
-> ⚠️ **BETA VERSION：v1.3.5‑Beta（测试版）**
-> This release is still in public beta. Unexpected edge‑case bugs may exist.
-> Please evaluate risks before daily production‑grade usage. Feedback via Issues is welcome.
 
-## Overview｜概要｜简介
-**🇬🇧 English**
-NoTabKana is an AutoHotkey‑v2‑powered enhancement script for the native Microsoft Japanese IME on Windows.
-It is designed to mimic the smooth selecting experience of macOS Japanese input: you no longer need to repeatedly tap the `Tab` key to unfold candidate lists and pick kanji.
-Instead, after you finish typing your romaji word, simply hit a number key to select the corresponding kanji entry directly.
-The `=` key opens the next page of conversion candidates, and the `-` key acts dual‑purpose: it outputs the long‑vowel mark「ー」during normal typing, and jumps to the previous candidate page only when page‑switching mode is active.
-This script does NOT hook into any internal IME APIs. It works purely by tracking your romaji keystroke sequence and sending lightweight auxiliary keystrokes.
+**A smoother Japanese typing experience on Windows.**  
+**Windows で、より快適な日本語入力を。**  
+**让 Windows 日语输入更加顺手。**
 
-**🇨🇳 中文**
-NoTabKana 是基于 AutoHotkey v2 打造的 Windows 原生微软日语输入法增强脚本。
-目标是复刻 macOS 日语输入法顺滑的选词体验：你不再需要反复敲击 `Tab` 展开候选列表、翻页选汉字。
-当你打完罗马音之后，直接按下数字键就可以选中对应的汉字条目。
-`=` 按键用于切换至下一页候选；`-` 具备双重行为：普通输入状态输出长音符号「ー」，仅在翻页模式激活时跳转至上一页候选。
-本脚本**不会劫持任何输入法底层私有接口**，仅靠追踪你的罗马音输入序列、发送轻量化辅助按键来实现全部功能。
+[![AutoHotkey v2](https://img.shields.io/badge/AutoHotkey-v2-blue)](https://www.autohotkey.com/) [![Platform](https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-lightgrey)](https://www.microsoft.com/windows) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE) [![Status: Beta](https://img.shields.io/badge/Status-Beta-orange)]()
 
-**🇯🇵 日本語**
-NoTabKana は AutoHotkey v2 で作られた、Windows標準のMicrosoft日本語IME向けの補助スクリプトです。
-macOSの日本語入力の滑らかな選択体験を再現することを目的としています。
-変換候補一覧を出すために何度も`Tab`キーを叩く必要はもうありません。
-ローマ字入力が終わったら数字キーを押すだけで、対応する漢字を直接選択可能になります。
-`=`キーは変換候補の次ページへ移動、`-`キーは二つの動作を持ちます：通常入力時は長音記号「ー」を出力し、ページ切り替えモードが有効な時のみ前の候補ページへジャンプします。
-このスクリプトはIMEの内部APIに一切フックせず、ローマ字のキー入力シーケンスを追跡し、軽量な補助キーイベントを送信するだけで動作します。
+**NoTabKana** is a lightweight Japanese input enhancement script built with AutoHotkey v2. It improves the candidate-selection workflow of the built-in Microsoft Japanese IME on Windows, aiming to reduce repetitive keyboard operations and provide a smoother Japanese typing experience inspired by macOS.
+
+**NoTabKana** は、AutoHotkey v2 で開発された日本語入力支援スクリプトです。Windows 標準の Microsoft 日本語 IME における変換候補の選択操作を効率化し、macOS のようなスムーズな日本語入力環境を目指しています。
+
+**NoTabKana** 是一款基于 AutoHotkey v2 开发的日语输入增强脚本，旨在优化 Windows 内置微软日语输入法的候选词选择流程，减少重复按键操作，带来更接近 macOS 的流畅日语输入体验。
+
+> **⚠️ Beta Release / ベータ版 / 测试版 — v1.3.5-Beta**
+>
+> This project is still under development. Some behaviors may vary depending on the IME state, Windows version, and application. Please read the limitations before daily use.
+>
+> 本プロジェクトは開発・検証中です。IME の状態、Windows のバージョン、使用するアプリケーションによって動作が異なる場合があります。日常的に使用する前に、制限事項をご確認ください。
+>
+> 本项目仍处于开发和测试阶段。实际行为可能受到输入法状态、Windows 版本及应用程序的影响。日常使用前，请先阅读限制说明。
 
 ---
 
-## Example｜使用示例｜例
-> Example 1：基础汉字选词｜基礎漢字選択｜基本的な漢字選択
+## 📑 Table of Contents / 目次 / 目录
 
-**🇬🇧 English**
-Switch your input method to Microsoft Japanese IME. Type `kawa`, then press number key `1` to select「川」directly.
-
-**🇨🇳 中文**
-将输入法切换为微软日语IME，输入`kawa`，按下数字`1`，直接选中「川」。
-
-**🇯🇵 日本語**
-Microsoft日本語IMEに切り替え、`kawa`と入力し、数字キー`1`を押すと「川」を直接選択できます。
-
-> Example 2：长音符与翻页｜長音符とページ送り｜Long vowel mark & page navigation
-
-**🇬🇧 English**
-Type `bi`, press `-` to output long‑vowel mark「ー」to get「ビー」, continue typing `ru`.
-If your target word is not on the current candidate page, press `=` to jump to the next page.
-When page‑mode is active, press `-` to go back one page. Once you find your desired term, press the corresponding number key (e.g. `1`) to select it.
-
-**🇨🇳 中文**
-输入`bi`，按下`‑`输出长音符号「ー」得到「ビー」，接着继续输入`ru`。
-如果目标词汇不在当前候选页面，按下`=`切换到下一页候选。
-在翻页模式激活状态下，按下`‑`返回上一页。找到目标词后，按下对应数字（例如`1`）选中词条。
-
-**🇯🇵 日本語**
-`bi`と入力し、`-`キーで長音記号「ー」を出力し「ビー」にしたあと、続けて`ru`を入力します。
-目的の単語が現在の候補ページに無い場合は`=`キーで次のページへ移動します。
-ページモードが有効な状態で`-`を押すと前のページに戻ります。探している単語を見つけたら、数字キー（例：`1`）で選択します。
-
-> Example3：状态自动重置｜自動リセット｜Auto‑state reset
-
-**🇬🇧 English**
-If you stop typing for 15 seconds, click elsewhere on screen, switch windows or change input language, all working states will reset automatically to prevent stuck hot‑key behaviour.
-
-**🇨🇳 中文**
-如果停止输入15秒、点击别处、切换窗口、切换输入法语言，全部运行状态会自动重置，避免热键状态卡死。
-
-**🇯🇵 日本語**
-15秒入力を止めたり、別の場所をクリック、ウィンドウ切り替え、言語切り替えをすると、全ての動作状態が自動的にリセットされ、ホットキーの状態固着を防ぎます。
+- [Features / 機能 / 功能](#-features--機能--功能)
+- [Key Bindings / キー操作 / 按键说明](#-key-bindings--キー操作--按键说明)
+- [Requirements / 動作環境 / 运行环境](#-requirements--動作環境--运行环境)
+- [Installation / インストール / 安装](#-installation--インストール--安装)
+- [Usage Examples / 使用例 / 使用示例](#-usage-examples--使用例--使用示例)
+- [How It Works / 仕組み / 工作原理](#️-how-it-works--仕組み--工作原理)
+- [Why Down Instead of Tab? / Tab ではなく Down を使う理由 / 为什么使用 Down 而不是 Tab](#-why-down-instead-of-tab--tab-ではなく-down-を使う理由--为什么使用-down-而不是-tab)
+- [Self-Test / セルフテスト / 自检](#-self-test--セルフテスト--自检)
+- [Known Limitations / 制限事項 / 已知限制](#-known-limitations--制限事項--已知限制)
+- [Changelog / 更新履歴 / 更新日志](#-changelog--更新履歴--更新日志)
+- [Troubleshooting / トラブルシューティング / 故障排查](#-troubleshooting--トラブルシューティング--故障排查)
+- [Contributing / コントリビューション / 参与贡献](#-contributing--コントリビューション--参与贡献)
+- [License / ライセンス / 许可证](#-license--ライセンス--许可证)
+- [Disclaimer / 免責事項 / 免责声明](#️-disclaimer--免責事項--免责声明)
 
 ---
 
-## Main Features / 主な機能 / 主要功能
-**🇬🇧 English**
-- Romaji‑buffer‑based state‑tracking engine: parse combinations, contracted sounds (拗音), geminate consonants(促音), syllabic nasal「ん」precisely, instead of simple keypress counting.
-- Pressing number keys after romaji input triggers `{Down}` to pop‑up the candidate panel and then selects the numbered entry.
-- `=` key: Activate page‑switch mode, trigger candidate panel, move to next candidate page. Page mode expires automatically after 1800ms.
-- `-` key: Dual‑mode behaviour. Output long‑vowel「ー」under normal state; jump to previous page only when page‑switch mode is alive.
-- Backspace debounce: instead of deleting one raw character, it removes one Japanese phonetic unit each time, with a short debounce window for rapid backspace hits.
-- Built‑in watchdog timer: reset automatically on window‑switch, IME‑language change, idle timeout, page‑mode timeout.
-- Safe bypass: Ctrl / Alt / Win modifier keys disable script logic, preserving native shortcuts such as copy‑paste.
-- Self‑test command: run `NoTabKana.ahk test` from command‑line to execute full‑automated unit tests without sending real keystrokes to your system.
-- Emergency manual reset shortcut: press `F12` while on Japanese IME to clear all states instantly.
+## ✨ Features / 機能 / 功能
 
-**🇨🇳 中文**
-- 基于罗马音缓冲区的状态追踪引擎：精准解析拗音、促音、拨音「ん」，而不是简单地统计敲击次数。
-- 罗马音输入后按下数字键：发送`{Down}`唤起候选面板，随后发送对应数字完成选词。
-- `=`按键：激活翻页模式，唤起候选面板，跳转至下一页候选；翻页模式1800毫秒后自动过期失效。
-- `-`按键：双模式行为。普通状态输出长音符号「ー」；只有翻页模式尚未超时时，才执行上翻页动作。
-- 退格防抖单元删除：不是删除原始英文字符，而是以一个日文发音单元作为删除对象；高速连打退格带有防抖合并窗口。
-- 内置看门狗定时器：切换窗口、切换输入法语言、空闲超时、翻页超时都会自动重置脚本状态。
-- 修饰键安全旁路：检测Ctrl / Alt / Win，一旦按下则绕过脚本逻辑，保留复制粘贴等原生快捷键不受干扰。
-- 内置自检命令：在命令行执行`NoTabKana.ahk test`即可全自动运行全套单元测试，不会向系统发送真实按键。
-- 紧急手动重置快捷键：日语输入法状态下按下`F12`，立刻清空全部状态。
+### English
 
-**🇯🇵 日本語**
-- ローマ字バッファを用いた状態追跡エンジン：単純なキーカウントではなく、拗音・促音・撥音「ん」を正確に分解します。
-- ローマ字入力後に数字キーを押す：`{Down}`を送信し候補ウィンドウを呼び出し、続けて数字キーを送信し選択を実行します。
-- `=`キー：ページ切り替えモードを起動、候補ウィンドウを表示し、次の候補ページへ移動。ページモードは1800ms後に自動失効します。
-- `-`キー：二つの動作。通常状態では長音記号「ー」を出力、ページモードが有効かつ期限内の場合のみ前のページへ移動します。
-- バックスペースデバウンス：生の英文字単位ではなく、日本語の発音単位ごとに削除します。高速連打に対して、短い待ち時間で操作をまとめます。
-- ウォッチドッグタイマー内蔵：ウィンドウ切り替え、IME言語変更、アイドルタイムアウト、ページモードの時間切れで自動リセットします。
-- 修飾キー安全バイパス：Ctrl/Alt/Winが押されているときはスクリプトのロジックをスキップし、コピー・ペーストなどのショートカットを保護します。
-- セルフテスト機能：コマンドラインから`NoTabKana.ahk test`を実行すると、実際のキーを送信せずに全自動単体テストを実行可能。
-- 緊急リセットショートカット：日本語IME使用中に`F12`を押すと、すべての状態を瞬時にクリアします。
+- **Number-key candidate selection:** Use a number key to select a conversion candidate after tracked Japanese input.
+- **Simplified candidate navigation:** Use `=` and `-` for candidate navigation and long-vowel-mark input.
+- **Romaji buffer parsing:** Track romaji sequences and recognize common Japanese kana combinations.
+- **Kana-unit tracking:** Maintain an internal representation of the input units to help handle Backspace operations.
+- **Backspace handling:** Use a short debounce interval to reduce state errors caused by rapid deletion.
+- **Automatic state recovery:** Monitor active-window changes, input-language changes, inactivity, and candidate-page timeouts.
+- **Letter-key passthrough:** Allow letter keystrokes to continue to the underlying input system while the script tracks input.
+- **Built-in self-tests:** Run automated logic checks without performing the normal candidate-selection actions during the test handlers.
 
----
+### 日本語
 
-## Operating Environment / 動作環境 / 运行环境
-**🇬🇧 English**
-- OS: Windows 10 / Windows 11
-- Runtime: AutoHotkey v2 (MANDATORY)
-- Input Method: Microsoft‑built‑in Japanese IME only
-> Not compatible with third‑party IME: Sogou Japanese, Google Japanese Input, ATOK, etc.
+- **数字キーによる候補選択：** 日本語入力を追跡している状態で数字キーを押すと、変換候補の選択を補助します。
+- **候補操作の簡略化：** `=` と `-` を使って候補の移動や長音記号の入力を行います。
+- **ローマ字バッファ解析：** ローマ字の入力列を追跡し、一般的な日本語のかな入力パターンを認識します。
+- **かな単位の追跡：** 内部で入力単位を管理し、Backspace による削除への対応を補助します。
+- **Backspace 対策：** 短いデバウンス処理により、連続削除時の状態ずれを抑えます。
+- **状態の自動リセット：** アクティブウィンドウ、入力言語、無操作時間、候補ページのタイムアウトを監視します。
+- **英字キーの透過：** スクリプトが入力を追跡している間も、英字キーの入力を下位の入力システムへ通します。
+- **セルフテスト機能：** 通常の候補選択操作を行わずに、スクリプトのロジックを自動テストできます。
 
-**🇨🇳 中文**
-- 操作系统：Windows10 / Windows11
-- 运行依赖：AutoHotkey v2（必须安装）
-- 输入法：**仅支持Windows自带微软日语IME**
-> 不兼容第三方输入法：搜狗日语、谷歌日语、ATOK等。
+### 简体中文
 
-**🇯🇵 日本語**
-- OS：Windows10 / Windows11
-- 実行環境：AutoHotkey v2（必須）
-- 入力方式：Windows標準Microsoft日本語IME専用
-> ※サードパーティ製IME（搜狗日本語、Google日本語入力、ATOKなど）には対応していません。
-
-## Quick Install / 簡単インストール / 快速安装
-**🇬🇧 English**
-1. Go to the official AutoHotkey website and download & install AutoHotkey v2.
-2. Download `NoTabKana.ahk` from this repository and save it locally.
-3. Double‑click `NoTabKana.ahk` to launch the background script service.
-4. If you see the AutoHotkey tray icon in the system notification bar, startup is successful.
-> Optional: Run `NoTabKana.ahk test` in terminal to trigger built‑in self‑diagnostic tests.
-> ⚠️Notice: This is a BETA release. Unexpected behaviours could still occur.
-
-**🇨🇳 中文**
-1. 前往 AutoHotkey 官网下载并且安装 AutoHotkey v2。
-2. 从本仓库下载 `NoTabKana.ahk` 保存到本地电脑。
-3. 双击 `NoTabKana.ahk`，启动后台脚本服务。
-4. 任务栏托盘出现AutoHotkey图标，代表启动成功。
-> 可选操作：终端运行 `NoTabKana.ahk test`，启动内置的自我诊断测试。
-> ⚠️注意：本版本为BETA测试版，仍有可能出现意料之外的异常行为。
-
-**🇯🇵 日本語**
-1. AutoHotkey公式サイトへアクセスし、AutoHotkey v2をダウンロード・インストールします。
-2. このリポジトリから`NoTabKana.ahk`をダウンロードしPCに保存します。
-3. `NoTabKana.ahk`をダブルクリックするとバックグラウンドサービスが起動します。
-4. システムトレイにAutoHotkeyアイコンが表示されたら起動成功です。
-> オプション：ターミナルから`NoTabKana.ahk test`を実行すると内蔵自己診断テストが起動します。
-> ⚠️注意：これはベータ版です。予期せぬ動作が発生する可能性があります。
+- **数字键选择候选词：** 在脚本追踪到日语输入后，按数字键辅助选择转换候选词。
+- **简化候选词翻页：** 使用 `=` 和 `-` 进行候选词导航或输入长音符号。
+- **罗马字缓冲区解析：** 追踪罗马字输入序列，识别常见的日语假名组合。
+- **假名单位追踪：** 在脚本内部维护输入单位信息，以辅助处理 Backspace 删除操作。
+- **Backspace 处理：** 通过短暂的防抖机制，减少连续删除时的状态错误。
+- **自动状态恢复：** 监测活动窗口变化、输入语言变化、长时间无操作及候选页超时。
+- **字母按键透传：** 在追踪输入状态的同时，让字母按键继续传递给底层输入系统。
+- **内置自检：** 运行自动化逻辑测试；测试处理程序不会执行正常的候选词选择操作。
 
 ---
 
-## License / ライセンス / 许可证
-**🇬🇧 English**
-Released under MIT License.
-You are free to use, modify, fork and redistribute this software. There is NO warranty of any kind.
+## ⌨️ Key Bindings / キー操作 / 按键说明
 
-**🇨🇳 中文**
-采用 MIT 开源许可证。
-你可以自由地使用、修改、分叉、再分发本软件。本软件不附带任何形式担保。
+| Key | English | 日本語 | 简体中文 |
+|---|---|---|---|
+| `A–Z` | Type romaji normally while the script tracks input. | ローマ字を通常どおり入力し、スクリプトが入力を追跡します。 | 正常输入罗马字，同时由脚本追踪输入状态。 |
+| `0–9` | Attempt candidate selection when tracked kana input exists; otherwise pass the digit through. | 追跡中のかな入力がある場合は候補選択を試み、それ以外では数字をそのまま通します。 | 存在被追踪的假名输入时尝试选择候选词，否则直接透传数字。 |
+| `=` | Send candidate-navigation keys to move forward. | 候補を進めるためのキー操作を送信します。 | 发送候选导航按键以向后移动。 |
+| `-` | Enter the long-vowel mark during normal input; move backward when page mode is active. | 通常入力時は長音記号を入力し、ページモード中は前の候補ページへ移動します。 | 普通输入时输入长音符号；翻页模式下向前翻页。 |
+| `Backspace` | Delete normally while updating the tracked state. | 通常どおり削除しながら、追跡状態を更新します。 | 正常执行删除，同时更新脚本追踪状态。 |
+| `Enter` | Confirm input and reset the tracked state. | 入力を確定し、追跡状態をリセットします。 | 确认输入并重置追踪状态。 |
+| `Esc` | Cancel the current input and reset the tracked state. | 現在の入力を取り消し、追跡状態をリセットします。 | 取消当前输入并重置追踪状态。 |
+| Mouse click | Reset tracked state to reduce stale-state errors. | 古い状態が残るのを防ぐため、追跡状態をリセットします。 | 重置追踪状态，以减少残留状态造成的问题。 |
 
-**🇯🇵 日本語**
-MITライセンスで公開されています。
-自由に使用、改変、フォーク、再配布が可能です。一切の保証はありません。
+**Important / 注意 / 注意：** These are the script's intended key behaviors. Actual candidate selection and navigation depend on the current Microsoft IME state and candidate layout.
 
-## Disclaimer / 免責事項 / 免责说明
-**🇬🇧 English**
-NoTabKana‑v1.3.5‑Beta is for personal study, research and non‑commercial testing purposes only.
-This script relies fully on Windows system input‑event behaviour. The author cannot guarantee zero‑fault performance under every hardware, Windows build, or input scenario.
-The program only listens and sends keyboard events; it will NOT modify, delete or overwrite any system files or personal data.
-All risks arising out of running this beta script shall be borne entirely by the end‑user. The author shall not be liable for any direct or indirect damages.
-This project is free‑of‑charge open‑source: there is no mandatory support, maintenance or update obligation.
+これらはスクリプトが想定するキー操作です。実際の候補選択や移動動作は、Microsoft IME の状態や候補表示によって異なる場合があります。
 
-**🇨🇳 中文**
-NoTabKana v1.3.5‑Beta 仅供个人学习、研究、非商业测试用途。
-本脚本高度依赖 Windows 的按键事件行为，作者无法保证在每一种硬件、系统版本、输入场景下零故障运行。
-程序仅监听与发送键盘事件，**不会修改、删除或者覆盖任何系统文件和私人数据**。
-运行此Beta测试版本产生的一切风险，全部由终端使用者自行承担。作者不对任何直接或间接损害承担责任。
-本项目是免费开源项目，不存在强制的技术支持、维护以及更新义务。
-
-**🇯🇵 日本語**
-NoTabKana v1.3.5‑Beta は個人の学習・研究・非営利テスト目的のみでご利用ください。
-本スクリプトはWindowsのキーイベントの挙動に依存しており、全ての環境、Windowsバージョン、入力シチュエーションで不具合ゼロを保証することはできません。
-プログラムはキーボードイベントの監視と送信のみを行い、システムファイルや個人データを変更・削除・上書きすることは一切ありません。
-このベータ版スクリプトの実行によって生じたすべてのリスクは利用者自身が負うものとします。作者はいかなる直接的・間接的損害についても責任を負いません。
-本プロジェクトは無料のオープンソースであり、サポート・保守・アップデートを義務付けるものではありません。
-
-## Contribute / 貢献 / 贡献
-**🇬🇧 English**
-Issues, feedback and Pull Requests are warmly welcomed! Please report any weird or broken behaviours you meet.
-
-**🇨🇳 中文**
-欢迎提交Issue、反馈以及Pull Request！如果你遇到异常或者奇怪的行为，请积极反馈。
-
-**🇯🇵 日本語**
-Issue、フィードバック、Pull Requestを歓迎します！不具合や奇妙な動作を見つけたらぜひご報告ください。
+以上为脚本设计的按键行为。实际候选词选择和导航效果取决于微软日语输入法当前的状态及候选列表布局。
 
 ---
 
-# 📜 Changelog｜変更履歴｜版本更新日志
-## Upgrade scope: From v1.3.0 → v1.3.5‑Beta
-### 📌 Major breaking architectural change: Trigger key migrated from `Tab` to `{Down}` (↓)
-#### Why we replaced Tab with Down key｜なぜTabキーから↓(Down)に変更したのか？｜为什么把Tab换成向下方向键？
-**🇬🇧 English**
-Original v1.3.0 used simulated `{Tab}` keystrokes to pop‑up the candidate panel, matching Microsoft IME’s native shortcut.
-But three fundamental, unfixable defects were discovered:
-1. Inside Microsoft Japanese IME, `Tab` has dual‑binded behaviour: it opens candidates **AND** shifts word segmentation boundaries. It will often unexpectedly split your input phrase, destroying your intended conversion range. This logic is hard‑coded deep inside Microsoft’s IME and cannot be overridden by AHK scripts.
-2. `Tab` is heavily used across browsers, code editors, terminals and forms for UI focus navigation. Emitting synthetic Tab events risks unwanted focus jumps.
-3. Once `Tab` triggers candidates, the IME locks itself into persistent segment‑edit mode until you press Enter or Esc, even if you cancel selection. This creates many hard‑to‑handle stuck‑state edge‑cases for our state machine.
+## 🚀 Requirements / 動作環境 / 运行环境
 
-In contrast, within the pre‑composition zone of Microsoft Japanese IME, the down arrow `{Down}` key has **only one single job: open the candidate dropdown**.
-It will never alter word segmentation, will not cause stray UI focus jumps, and does NOT trigger that stubborn persistent lock‑in state.
-This single‑purpose behaviour drastically cuts side‑effects and reduces freeze risks. That is the core reason for this breaking change.
+### English
 
-**🇨🇳 中文**
-原始 v1.3.0 版本是模拟发送 `{Tab}` 唤起候选面板，这个思路本来贴合微软IME原生快捷键。
-但是我们发现了三条根本性、无法靠小补丁修复的硬缺陷：
-1. 在微软日语IME底层，`Tab`是双重绑定：它除了打开候选列表，**同时还会移动文节切分边界**！经常擅自拆分正在输入的词汇，破坏转换范围。这个逻辑是微软硬编码在输入法内部的，AHK脚本无法屏蔽。
-2. `Tab` 在浏览器、编辑器、终端、表单大量用来跳转UI焦点。模拟发送Tab可能引发意料之外的焦点乱跑。
-3. 一旦用Tab唤起候选，就算放弃选词，IME也会持续锁定在顽固的「文节编辑模式」，直到回车或ESC。这制造了大量状态卡死的边界问题，给状态机带来巨大压力。
+- **Operating system:** Windows 10 or Windows 11
+- **Runtime:** AutoHotkey v2
+- **Input method:** Built-in Microsoft Japanese IME
+- **Permissions:** Run with the permissions required by your target application. Administrator privileges should not be assumed to be necessary for every environment.
 
-反观向下方向键 `{Down}`：在微软日语IME的预编辑区域，**它只有一个单一功能：唤起候选下拉菜单**。
-它不会修改文节切分，不会乱跳UI焦点，不会触发那种顽固的锁定状态。
-这种单一用途的特性大幅降低副作用，减少卡死风险。这就是做出这次破坏性架构变更的核心理由。
+Third-party IMEs such as Google Japanese Input and ATOK are not officially supported.
 
-**🇯🇵 日本語**
-初期のv1.3.0では`{Tab}`のキー送信で候補ウィンドウを開いていました。これはMicrosoft IMEの標準ショートカットに沿った設計でした。
-しかし根本的でパッチでは直せない3つの問題が発見されました：
-1. Microsoft日本語IMEの内部では`Tab`は2つの動作を持っています。候補を開くだけでなく、**文節の区切り位置を移動させてしまう**のです。意図しない箇所で単語が分割され、変換範囲が崩れます。この動作はIME内部にハードコードされており、AHKから上書きできません。
-2. `Tab`はブラウザ・エディタ・ターミナル・フォームでフォーカス移動に多用されています。偽のTabイベント送信は予期せぬフォーカスジャンプを引き起こす可能性があります。
-3. Tabで候補を開くと、選択をキャンセルしても、EnterまたはEscを押すまでIMEが「文節編集モード」にロックされます。これにより、状態管理が非常に困難になる多くの境界ケースが生まれます。
+### 日本語
 
-一方、下矢印`{Down}`は、Microsoft日本語IMEのプリ編集領域において、**候補リストを開くという一つの役割だけを持っています**。
-文節を分割せず、UIのフォーカスを飛ばさず、厄介なロック状態も引き起こしません。
-副作用を大きく抑え、ハングのリスクを減らせる。これが今回の破壊的変更を行った根本的な理由です。
+- **OS：** Windows 10 または Windows 11
+- **実行環境：** AutoHotkey v2
+- **入力方式：** Windows 標準の Microsoft 日本語 IME
+- **権限：** 対象アプリケーションの権限に応じて実行してください。すべての環境で管理者権限が必要というわけではありません。
 
-### ✨ Other Major Improvements from v1.3.0 → v1.3.5‑Beta
-**🇬🇧 English**
-- Replaced the simple keypress‑counter state‑machine with a full romaji‑token parsing engine backed by a character buffer, correctly handling contracted sounds, geminate consonants and syllabic‑nasal sequences.
-- Implemented phonetic‑unit‑aware backspace erase logic plus backspace debounce protection.
-- Added watchdog auto‑reset system: idle timeout, window switch detection, IME language change detection.
-- Built‑in safety bypass for Ctrl/Alt/Win modifier shortcuts.
-- Added emergency reset hotkey (`F12`) and a zero‑keystroke automated unit‑test framework runnable from command‑line.
-- Fixed many edge‑case parsing bugs and fine‑tuned default timing values to balance responsiveness and stability.
+Google 日本語入力や ATOK などのサードパーティ製 IME は、公式サポートの対象外です。
 
-**🇨🇳 中文**
-- 抛弃了 v1.3.0 简陋的敲击计数器状态机，改用基于字符缓冲区的完整罗马音分词解析引擎，可以正确处理拗音、促音、拨音序列。
-- 实现了「按发音单元」删除的退格逻辑，并加入退格防抖保护。
-- 增加看门狗自动重置系统：空闲超时、窗口切换检测、输入法语种切换检测。
-- 增加 Ctrl/Alt/Win 修饰键安全旁路，保护原生系统快捷键。
-- 新增紧急重置热键（`F12`）和一套不需要发送真实按键、可从命令行启动的自动化单元测试框架。
-- 修复大量边界解析BUG，精细调校各项默认延时参数，平衡响应速度与稳定性。
+### 简体中文
 
-**🇯🇵 日本語**
-- v1.3.0の単純なキーカウンター式ステートマシンを廃止し、文字バッファに基づいた完全なローマ字トークン解析エンジンに置き換え、拗音・促音・撥音のシーケンスを正しく処理できるようになりました。
-- 発音単位で削除するバックスペースロジックと、バックスペースのデバウンス保護を実装。
-- ウォッチドッグ自動リセットシステムを追加：アイドルタイムアウト、ウィンドウ切り替え検知、IME言語切り替え検知。
-- Ctrl/Alt/Win修飾キーの安全バイパスを実装し、OS本来のショートカットを保護。
-- 緊急リセットホットキー（`F12`）、および実キーを送信せずコマンドラインから起動可能な自動単体テストフレームワークを追加。
-- 多くの境界パース不具合を修正、応答性と安定性のバランスのためデフォルトの待ち時間を微調整。
+- **操作系统：** Windows 10 或 Windows 11
+- **运行环境：** AutoHotkey v2
+- **输入法：** Windows 内置微软日语输入法
+- **运行权限：** 根据目标应用程序的权限要求运行，不应默认认为所有环境都必须使用管理员权限。
+
+Google 日语输入法、ATOK 等第三方输入法暂不属于官方支持范围。
+
+---
+
+## 📥 Installation / インストール / 安装
+
+### English
+
+1. Install [AutoHotkey v2](https://www.autohotkey.com/).
+2. Open the [NoTabKana GitHub repository](https://github.com/LZKgood/NoTabKana/tree/main).
+3. Download the main `.ahk` script from the repository.
+4. Double-click the script to launch it.
+5. Confirm that the AutoHotkey icon appears in the system tray.
+6. Switch to Microsoft Japanese IME and try the usage examples below.
+
+To stop the script, right-click its system-tray icon and select the exit option.
+
+### 日本語
+
+1. [AutoHotkey v2](https://www.autohotkey.com/) をインストールします。
+2. [NoTabKana の GitHub リポジトリ](https://github.com/LZKgood/NoTabKana/tree/main) を開きます。
+3. リポジトリからメインの `.ahk` スクリプトをダウンロードします。
+4. スクリプトをダブルクリックして起動します。
+5. タスクトレイに AutoHotkey のアイコンが表示されていることを確認します。
+6. Microsoft 日本語 IME に切り替え、下記の使用例を試します。
+
+終了するには、タスクトレイのアイコンを右クリックし、終了メニューを選択してください。
+
+### 简体中文
+
+1. 安装 [AutoHotkey v2](https://www.autohotkey.com/)。
+2. 打开 [NoTabKana 的 GitHub 仓库](https://github.com/LZKgood/NoTabKana/tree/main)。
+3. 下载仓库中的主 `.ahk` 脚本文件。
+4. 双击脚本启动程序。
+5. 确认系统托盘中出现 AutoHotkey 图标。
+6. 切换到微软日语输入法，尝试下方的使用示例。
+
+如需退出脚本，右键单击系统托盘中的图标，然后选择退出。
+
+---
+
+## 💡 Usage Examples / 使用例 / 使用示例
+
+### Example 1 — Candidate selection / 候補選択 / 选择候选词
+
+**English**
+
+1. Switch to Microsoft Japanese IME.
+2. Type `kawa`.
+3. Press `1` while the composition is being tracked.
+4. NoTabKana attempts to open candidate navigation and select the first candidate.
+
+For example, the desired result may be `川`, depending on the IME's conversion results and candidate order.
+
+**日本語**
+
+1. Microsoft 日本語 IME に切り替えます。
+2. `kawa` と入力します。
+3. 入力が追跡されている状態で `1` を押します。
+4. NoTabKana が候補操作を開始し、最初の候補の選択を試みます。
+
+変換結果や候補の順序によっては、`川` などが候補として表示されます。
+
+**简体中文**
+
+1. 切换到微软日语输入法。
+2. 输入 `kawa`。
+3. 在脚本仍追踪这段输入时按 `1`。
+4. NoTabKana 会尝试打开候选导航并选择第一个候选词。
+
+根据输入法的转换结果和候选词顺序，目标结果可能是 `川`。
+
+### Example 2 — Long-vowel mark / 長音記号 / 长音符号
+
+**English**
+
+1. Type `bi`.
+2. Press `-` during normal input.
+3. Continue typing `ru`.
+
+The intended result is `ビール`. The exact output depends on how the active IME handles the forwarded key.
+
+**日本語**
+
+1. `bi` と入力します。
+2. 通常の入力状態で `-` を押します。
+3. 続けて `ru` と入力します。
+
+想定される入力結果は `ビール` です。実際の出力は、使用中の IME によるキー処理に依存します。
+
+**简体中文**
+
+1. 输入 `bi`。
+2. 在普通输入状态下按 `-`。
+3. 继续输入 `ru`。
+
+预期输入结果为 `ビール`。实际输出取决于当前输入法如何处理传递过去的按键。
+
+### Example 3 — Candidate navigation / 候補移動 / 候选词导航
+
+**English**
+
+- Press `=` to trigger the configured forward-navigation sequence.
+- While page mode is active, press `-` to trigger backward navigation.
+- Press a number key to attempt to select a candidate.
+
+**日本語**
+
+- `=` を押すと、設定された次候補への移動操作を実行します。
+- ページモード中に `-` を押すと、前の候補への移動を試みます。
+- 数字キーを押すと、候補の選択を試みます。
+
+**简体中文**
+
+- 按 `=` 执行脚本配置的向后导航操作。
+- 翻页模式激活时，按 `-` 尝试向前翻页。
+- 按数字键尝试选择候选词。
+
+> **Note / 注意 / 注意**
+> Candidate navigation is state-dependent. If the IME is not showing the expected candidate interface, the same key sequence may produce a different result.
+
+> 候補操作は IME の状態に依存します。想定した候補画面が表示されていない場合、同じキー操作でも結果が異なることがあります。
+
+> 候选词导航取决于输入法状态。如果输入法没有处于预期的候选界面，同一组按键也可能产生不同结果。
+
+---
+
+## ⚙️ How It Works / 仕組み / 工作原理
+
+### English
+
+NoTabKana uses keyboard-event tracking and an internal romaji buffer rather than reading the Microsoft IME's private composition buffer.
+
+Its workflow is:
+
+1. **Capture and pass through:** Letter keys continue to the underlying input system while the script observes them.
+2. **Buffer:** Romaji sequences are recorded in an internal buffer.
+3. **Parse:** The parser recognizes supported romaji patterns and updates the tracked kana units.
+4. **Handle special keys:** Number keys and navigation keys trigger actions according to the script's tracked state.
+5. **Recover:** Window changes, input-language changes, inactivity, and other reset events help clear stale state.
+
+The internal buffer is only an estimate of the IME's actual composition. It cannot perfectly detect every edit or state change made by the IME itself.
+
+### 日本語
+
+NoTabKana は、Microsoft IME の非公開の変換バッファを直接読み取るのではなく、キーボードイベントと内部のローマ字バッファを使って入力状態を追跡します。
+
+処理の流れは次のとおりです。
+
+1. **入力の透過と監視：** 英字キーを入力システムへ通しながら、その入力をスクリプトが監視します。
+2. **バッファリング：** ローマ字の入力列を内部バッファに記録します。
+3. **解析：** 対応するローマ字パターンを認識し、追跡対象のかな単位を更新します。
+4. **特殊キーの処理：** 数字キーや候補操作キーを、追跡状態に応じて処理します。
+5. **状態の復旧：** ウィンドウや入力言語の変更、無操作時間などを利用して、古い状態の解消を試みます。
+
+内部バッファは IME の実際の変換状態を推定したものです。IME 側で発生するすべての編集や状態変化を完全に検出できるわけではありません。
+
+### 简体中文
+
+NoTabKana 不会直接读取微软输入法的私有组合缓冲区，而是通过键盘事件和内部罗马字缓冲区追踪输入状态。
+
+工作流程如下：
+
+1. **透传与监测：** 字母按键继续传递给底层输入系统，同时由脚本观察这些按键。
+2. **缓冲：** 将罗马字输入序列记录到内部缓冲区。
+3. **解析：** 识别脚本支持的罗马字组合，并更新内部追踪的假名单位。
+4. **特殊按键处理：** 根据当前追踪状态处理数字键和候选导航按键。
+5. **状态恢复：** 利用窗口变化、输入语言变化、无操作超时等机制，尝试清理过期状态。
+
+内部缓冲区只是对输入法实际组合状态的估算，无法完美识别输入法内部发生的所有编辑和状态变化。
+
+---
+
+## 🔄 Why Down Instead of Tab? / Tab ではなく Down を使う理由 / 为什么使用 Down 而不是 Tab
+
+### English
+
+Earlier versions of NoTabKana used `Tab` to initiate candidate selection. In v1.3.5-Beta, the script uses `Down` (`↓`) as its default candidate-navigation key sequence.
+
+The reasons for this design change are:
+
+- To explore a candidate-selection workflow that relies less on `Tab`.
+- To reduce unwanted interactions with applications that use `Tab` for focus navigation.
+- To simplify the script's candidate-navigation logic and state handling.
+
+This change does not guarantee that `Down` will behave identically in every IME state. Microsoft Japanese IME may handle `Down` differently depending on whether composition, conversion, or a candidate list is active.
+
+### 日本語
+
+以前の NoTabKana では、候補選択を開始するために `Tab` を使用していました。v1.3.5-Beta では、候補操作の既定キーとして `Down`（`↓`）を使用する方式に変更しました。
+
+主な理由は次のとおりです。
+
+- `Tab` への依存を減らした候補選択フローを検討するため。
+- アプリケーション側のフォーカス移動に `Tab` が使われる場合の意図しない干渉を減らすため。
+- 候補操作のロジックと状態管理を簡潔にするため。
+
+ただし、すべての IME 状態で `Down` が同じように動作することを保証するものではありません。変換中か、候補一覧が表示されているかなどによって、Microsoft 日本語 IME の動作は異なる場合があります。
+
+### 简体中文
+
+早期版本的 NoTabKana 使用 `Tab` 启动候选词选择流程。从 v1.3.5-Beta 开始，默认改用 `Down`（`↓`）作为候选导航按键。
+
+此次调整主要出于以下考虑：
+
+- 尝试减少候选词选择流程对 `Tab` 的依赖。
+- 降低 `Tab` 与应用程序焦点切换操作发生意外交互的可能性。
+- 简化候选词导航逻辑和状态管理。
+
+这并不意味着 `Down` 在所有输入法状态下都会有完全相同的行为。微软日语输入法可能会根据当前是否正在组合输入、是否处于转换状态，以及候选列表是否显示，采用不同的按键处理方式。
+
+---
+
+## 🧪 Self-Test / セルフテスト / 自检
+
+### English
+
+NoTabKana includes a built-in test mode for checking supported script logic without running the normal candidate-selection handlers.
+
+If your AutoHotkey v2 executable is available as `AutoHotkey.exe`, you can try:
+
+```powershell
+AutoHotkey.exe "NoTabKana.ahk" test
+```
+
+Replace `NoTabKana.ahk` with the actual script filename. Check the script directory for `selftest.log` after the test finishes.
+
+A successful self-test indicates that the tested logic passed. It does **not** prove that synthetic key events will behave correctly in every Microsoft IME state or application.
+
+### 日本語
+
+NoTabKana には、通常の候補選択処理を実行せずに、対応するスクリプトロジックを確認するためのテストモードがあります。
+
+AutoHotkey v2 の実行ファイルが `AutoHotkey.exe` として利用できる場合、次のコマンドを試してください。
+
+```powershell
+AutoHotkey.exe "NoTabKana.ahk" test
+```
+
+`NoTabKana.ahk` は実際のスクリプトファイル名に置き換えてください。テスト終了後、スクリプトのフォルダーに `selftest.log` が生成されているか確認します。
+
+セルフテストの成功は、テスト対象のロジックが正常に動作したことを示します。ただし、すべての Microsoft IME の状態やアプリケーションで、合成キー入力が正常に動作することを保証するものではありません。
+
+### 简体中文
+
+NoTabKana 内置了测试模式，可以在不执行常规候选词选择处理程序的情况下，检查脚本中的部分逻辑。
+
+如果 AutoHotkey v2 的可执行文件可以通过 `AutoHotkey.exe` 调用，可以尝试运行：
+
+```powershell
+AutoHotkey.exe "NoTabKana.ahk" test
+```
+
+请将 `NoTabKana.ahk` 替换为实际脚本文件名。测试完成后，检查脚本所在目录中是否生成了 `selftest.log`。
+
+自检通过只代表被测试的逻辑通过了检查，**不代表**合成按键在所有微软日语输入法状态和应用程序中都能正常工作。
+
+---
+
+## ⚠️ Known Limitations / 制限事項 / 已知限制
+
+### English
+
+Please keep the following limitations in mind:
+
+1. **IME state is inferred.** NoTabKana tracks keyboard input and does not directly read the IME's private composition buffer.
+2. **Candidate behavior varies.** Candidate order, candidate-window behavior, and navigation results depend on Microsoft Japanese IME.
+3. **Synthetic keys are not physical keystrokes.** Applications and IME components may process generated key events differently from physical keyboard input.
+4. **Editing can desynchronize the buffer.** Complex deletion, cursor movement, mouse interactions, or unusual input sequences may cause the internal state to diverge from the IME.
+5. **Compatibility is limited.** Third-party IMEs and unusual application environments have not been established as supported targets.
+6. **Beta stability is not guaranteed.** The script may need further testing and adjustment.
+
+### 日本語
+
+次の制限事項にご注意ください。
+
+1. **IME 状態は推定値です。** NoTabKana はキーボード入力を追跡しますが、IME の非公開の変換バッファを直接読み取りません。
+2. **候補の動作は環境に依存します。** 候補の順序、候補ウィンドウの動作、移動結果は Microsoft 日本語 IME の状態によって異なります。
+3. **合成キー入力は物理キー入力と同じではありません。** アプリケーションや IME が、スクリプトから送信されたキーイベントを異なる方法で処理する場合があります。
+4. **編集操作で状態がずれる可能性があります。** 複雑な削除、カーソル移動、マウス操作、特殊な入力列によって、内部状態と IME の状態が一致しなくなる場合があります。
+5. **互換性には制限があります。** サードパーティ製 IME や特殊なアプリケーション環境での動作は、サポート対象として確立されていません。
+6. **ベータ版の安定性は保証されません。** 今後も検証や調整が必要になる可能性があります。
+
+### 简体中文
+
+请注意以下限制：
+
+1. **输入法状态是推测出来的。** NoTabKana 追踪键盘输入，但不会直接读取输入法的私有组合缓冲区。
+2. **候选词行为因状态而异。** 候选顺序、候选窗口行为和导航结果取决于微软日语输入法的实际状态。
+3. **模拟按键不等于物理按键。** 应用程序和输入法组件可能会以不同方式处理脚本发送的按键事件。
+4. **编辑操作可能造成状态不同步。** 复杂删除、光标移动、鼠标操作或特殊输入序列，都可能导致脚本内部状态与输入法实际状态不一致。
+5. **兼容性存在限制。** 第三方输入法和特殊应用程序环境尚未被确认为支持目标。
+6. **测试版稳定性不作保证。** 项目仍可能需要进一步测试和调整。
+
+---
+
+## 🔄 Changelog / 更新履歴 / 更新日志
+
+### v1.3.5-Beta
+
+**English**
+
+- Reworked input tracking around an internal romaji buffer and parser.
+- Added recognition of common kana combinations, including contracted sounds, geminate consonants, and syllabic nasal sequences.
+- Improved Backspace tracking with a debounce mechanism.
+- Added state-recovery checks for window changes, input-language changes, inactivity, and candidate-page timeouts.
+- Changed the candidate-entry approach from `Tab` to `Down`.
+- Included a built-in self-test mode.
+- Refined input-state tracking and reset handling.
+
+**日本語**
+
+- 内部ローマ字バッファと解析処理を中心に、入力追跡の仕組みを見直しました。
+- 拗音、促音、撥音を含む一般的なかな入力パターンの認識を追加しました。
+- デバウンス処理により Backspace の追跡を改善しました。
+- ウィンドウ変更、入力言語変更、無操作時間、候補ページのタイムアウトに対する状態復旧処理を追加しました。
+- 候補操作の開始方法を `Tab` から `Down` に変更しました。
+- セルフテストモードを追加しました。
+- 入力状態の追跡とリセット処理を調整しました。
+
+**简体中文**
+
+- 围绕内部罗马字缓冲区和解析器，重新整理输入追踪机制。
+- 增加对常见假名组合的识别，包括拗音、促音和拨音相关序列。
+- 通过防抖机制改进 Backspace 状态追踪。
+- 增加针对窗口变化、输入语言变化、无操作超时和候选页超时的状态恢复检查。
+- 将候选操作的启动方式从 `Tab` 改为 `Down`。
+- 增加内置自检模式。
+- 调整输入状态追踪与重置逻辑。
+
+> **Behavior change / 動作変更 / 行为变更：** The candidate-entry key sequence changed from the earlier `Tab`-based approach to the current `Down`-based approach. Results may differ from previous versions.
+
+> **動作変更：** 候補操作のキーシーケンスを従来の `Tab` 方式から `Down` 方式へ変更しました。以前のバージョンとは結果が異なる場合があります。
+
+> **行为变更：** 候选操作按键序列从早期版本的 `Tab` 方案改为当前的 `Down` 方案，实际效果可能与旧版本不同。
+
+---
+
+## 🛠️ Troubleshooting / トラブルシューティング / 故障排查
+
+### English
+
+**The number key does not select a candidate.**
+
+- Confirm that Microsoft Japanese IME is active.
+- Ensure that the script is running.
+- Check whether the IME is in the expected composition or candidate-selection state.
+- Try reproducing the issue with a short, simple input sequence.
+
+**The script behaves unexpectedly after Backspace or mouse interaction.**
+
+- The internal buffer may no longer match the IME's actual composition.
+- Cancel the current composition or switch focus and retry.
+- If the issue persists, report the exact steps that reproduce it.
+
+**The self-test command does not run.**
+
+- Confirm that AutoHotkey v2 is installed.
+- Check the script filename and executable path.
+- Review any error message and the generated `selftest.log`, if available.
+
+### 日本語
+
+**数字キーで候補を選択できない場合**
+
+- Microsoft 日本語 IME が有効になっていることを確認してください。
+- スクリプトが起動していることを確認してください。
+- IME が想定する入力中または候補選択中の状態になっているか確認してください。
+- 短く単純な入力列で問題を再現できるか試してください。
+
+**Backspace やマウス操作の後に動作がおかしくなる場合**
+
+- 内部バッファと IME の実際の入力状態が一致していない可能性があります。
+- 現在の入力を取り消すか、フォーカスを切り替えてから再試行してください。
+- 問題が続く場合は、再現手順を具体的に報告してください。
+
+**セルフテストを実行できない場合**
+
+- AutoHotkey v2 がインストールされていることを確認してください。
+- スクリプトのファイル名と実行ファイルのパスを確認してください。
+- エラーメッセージと、生成されている場合は `selftest.log` を確認してください。
+
+### 简体中文
+
+**按数字键无法选择候选词**
+
+- 确认当前使用的是微软日语输入法。
+- 确认脚本已经正常启动。
+- 检查输入法是否处于预期的组合输入或候选选择状态。
+- 尝试使用简短、简单的输入序列复现问题。
+
+**Backspace 或鼠标操作后脚本行为异常**
+
+- 内部缓冲区可能已与输入法的实际组合状态不同步。
+- 尝试取消当前输入，或切换焦点后重新输入。
+- 如果问题仍然存在，请记录并提交具体复现步骤。
+
+**自检命令无法运行**
+
+- 确认已安装 AutoHotkey v2。
+- 检查脚本文件名和可执行文件路径。
+- 查看报错信息，以及存在时生成的 `selftest.log`。
+
+---
+
+## 🤝 Contributing / コントリビューション / 参与贡献
+
+### English
+
+Contributions are welcome, including:
+
+- Bug reports and reproducible test cases
+- Compatibility testing
+- Code improvements
+- Documentation corrections and translations
+- Feature suggestions
+
+Before submitting a report, please check existing Issues and include your Windows version, AutoHotkey v2 version, reproduction steps, and expected versus actual behavior.
+
+### 日本語
+
+以下のような貢献を歓迎します。
+
+- バグ報告と再現可能なテストケース
+- 互換性の検証
+- コードの改善
+- ドキュメントの修正と翻訳
+- 機能の提案
+
+報告の前に既存の Issue を確認し、Windows と AutoHotkey v2 のバージョン、再現手順、期待する動作と実際の動作を記載してください。
+
+### 简体中文
+
+欢迎通过以下方式参与项目：
+
+- 提交 Bug 报告和可复现的测试案例
+- 测试不同环境下的兼容性
+- 改进代码
+- 修正文档或参与翻译
+- 提出功能建议
+
+提交问题前，请先检查已有的 Issues，并尽量附上 Windows 版本、AutoHotkey v2 版本、复现步骤，以及预期行为与实际行为的差异。
+
+---
+
+## 📄 License / ライセンス / 许可证
+
+### English
+
+This project is released under the [MIT License](LICENSE). See the `LICENSE` file for the complete license text.
+
+### 日本語
+
+本プロジェクトは [MIT License](LICENSE) のもとで公開されています。ライセンスの全文は `LICENSE` ファイルをご確認ください。
+
+### 简体中文
+
+本项目采用 [MIT License](LICENSE) 开源许可证。完整许可条款请参阅仓库中的 `LICENSE` 文件。
+
+---
+
+## ⚠️ Disclaimer / 免責事項 / 免责声明
+
+### English
+
+NoTabKana is provided **as is**, without warranties of any kind, to the extent permitted by applicable law.
+
+The script sends keyboard events and tracks input state. Unexpected behavior may affect text entry or keyboard-driven interactions in the active application. The project does not guarantee compatibility with every Windows configuration, IME state, or application.
+
+Use the beta version at your own discretion. Please save important work before testing and report reproducible issues through GitHub Issues.
+
+### 日本語
+
+NoTabKana は、適用される法律で認められる範囲において、いかなる保証も付さず「現状のまま」提供されます。
+
+本スクリプトはキーボードイベントを送信し、入力状態を追跡します。予期しない動作によって、アクティブなアプリケーションでの文字入力やキー操作に影響が出る場合があります。すべての Windows 環境、IME の状態、アプリケーションとの互換性を保証するものではありません。
+
+ベータ版の利用は自己責任でお願いします。テスト前に重要な作業を保存し、再現可能な問題は GitHub Issues から報告してください。
+
+### 简体中文
+
+NoTabKana 按「现状」提供，在适用法律允许的范围内不作任何形式的保证。
+
+本脚本会发送键盘事件并追踪输入状态。意外行为可能影响当前应用程序中的文字输入或键盘操作。本项目不保证能够兼容所有 Windows 配置、输入法状态和应用程序。
+
+使用测试版的风险由使用者自行承担。测试前请保存重要工作；如遇到可复现的问题，欢迎通过 GitHub Issues 反馈。
+
+---
+
+**Made for a smoother Japanese typing workflow.**  
+**より快適な日本語入力環境を目指して。**  
+**让日语输入更加流畅。**
