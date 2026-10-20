@@ -24,20 +24,20 @@
 
 ## 📑 Table of Contents / 目次 / 目录
 
-- [Features / 機能 / 功能](#-features--機能--功能)
-- [Key Bindings / キー操作 / 按键说明](#-key-bindings--キー操作--按键说明)
-- [Requirements / 動作環境 / 运行环境](#-requirements--動作環境--运行环境)
-- [Installation / インストール / 安装](#-installation--インストール--安装)
-- [Usage Examples / 使用例 / 使用示例](#-usage-examples--使用例--使用示例)
-- [How It Works / 仕組み / 工作原理](#️-how-it-works--仕組み--工作原理)
-- [Why Down Instead of Tab? / Tab ではなく Down を使う理由 / 为什么使用 Down 而不是 Tab](#-why-down-instead-of-tab--tab-ではなく-down-を使う理由--为什么使用-down-而不是-tab)
-- [Self-Test / セルフテスト / 自检](#-self-test--セルフテスト--自检)
-- [Known Limitations / 制限事項 / 已知限制](#-known-limitations--制限事項--已知限制)
-- [Changelog / 更新履歴 / 更新日志](#-changelog--更新履歴--更新日志)
-- [Troubleshooting / トラブルシューティング / 故障排查](#-troubleshooting--トラブルシューティング--故障排查)
-- [Contributing / コントリビューション / 参与贡献](#-contributing--コントリビューション--参与贡献)
-- [License / ライセンス / 许可证](#-license--ライセンス--许可证)
-- [Disclaimer / 免責事項 / 免责声明](#️-disclaimer--免責事項--免责声明)
+- ✨ [Features / 機能 / 功能](#-features--機能--功能)
+- ⌨️ [Key Bindings / キー操作 / 按键说明](#-key-bindings--キー操作--按键说明)
+- 🚀 [Requirements / 動作環境 / 运行环境](#-requirements--動作環境--运行环境)
+- 📥 [Installation / インストール / 安装](#-installation--インストール--安装)
+- 💡 [Usage Examples / 使用例 / 使用示例](#-usage-examples--使用例--使用示例)
+- ⚙️ [How It Works / 仕組み / 工作原理](#️-how-it-works--仕組み--工作原理)
+- 🔄 [Why Down Instead of Tab? / Tab ではなく Down を使う理由 / 为什么使用 Down 而不是 Tab](#-why-down-instead-of-tab--tab-ではなく-down-を使う理由--为什么使用-down-而不是-tab)
+- 🧪 [Self-Test / セルフテスト / 自检](#-self-test--セルフテスト--自检)
+- ⚠️ [Known Limitations / 制限事項 / 已知限制](#-known-limitations--制限事項--已知限制)
+- 🔄 [Changelog / 更新履歴 / 更新日志](#-changelog--更新履歴--更新日志)
+- 🛠️ [Troubleshooting / トラブルシューティング / 故障排查](#-troubleshooting--トラブルシューティング--故障排查)
+- 🤝 [Contributing / コントリビューション / 参与贡献](#-contributing--コントリビューション--参与贡献)
+- 📄 [License / ライセンス / 许可证](#-license--ライセンス--许可证)
+- ⚠️ [Disclaimer / 免責事項 / 免责声明](#️-disclaimer--免責事項--免责声明)
 
 ---
 
