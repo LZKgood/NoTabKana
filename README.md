@@ -538,9 +538,11 @@ Please keep the following limitations in mind:
 
 ## Changelog
 ### v1.3.6
-> Optimization release, bugfix only, no new features. Fully backward compatible with｜最適化リリース、不具合修正のみで新機能追加なし。v1.3.5と完全に下位互換があります。｜优化版本，仅Bug修复，无新增功能。与v1.3.5完全向下兼容。
+> Optimization release, bugfix only, no new features. Fully backward compatible with
+> 最適化リリース、不具合修正のみで新機能追加なし。v1.3.5と完全に下位互換があります。
+> 优化版本，仅Bug修复，无新增功能。与v1.3.5完全向下兼容。
 
-> v1.3.5.
+ v1.3.5.
 
 **简体中文**
 1. 【核心修复】重构数字键热键判定逻辑，解决旧版日语输入法下，未在假名输入状态时数字键依然被脚本捕获的穿透问题。
