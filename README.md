@@ -1,18 +1,33 @@
+<div align="center">
+
 # NoTabKana
 
-**A smoother Japanese typing experience on Windows.**  
-**Windows で、より快適な日本語入力を。**  
-**让 Windows 日语输入更加顺手。**
+### A smoother Japanese typing experience on Windows.
 
-[![AutoHotkey v2](https://img.shields.io/badge/AutoHotkey-v2-blue)](https://www.autohotkey.com/) [![Platform](https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-lightgrey)](https://www.microsoft.com/windows) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE) [![Status: Beta](https://img.shields.io/badge/Status-Beta-orange)]()
+**Windows で、より快適な日本語入力を。**<br>**让 Windows 日语输入更加顺手。**
 
-**NoTabKana** is a lightweight Japanese input enhancement script built with AutoHotkey v2. It improves the candidate-selection workflow of the built-in Microsoft Japanese IME on Windows, aiming to reduce repetitive keyboard operations and provide a smoother Japanese typing experience inspired by macOS.
+[![AutoHotkey v2](https://img.shields.io/badge/AutoHotkey-v2-blue?logo=autohotkey&logoColor=white)](https://www.autohotkey.com/)
+[![Windows 10/11](https://img.shields.io/badge/Windows-10%20%7C%2011-0078D4?logo=windows&logoColor=white)](https://www.microsoft.com/windows)
+[![License: MIT](https://img.shields.io/badge/License-MIT-2ea44f.svg)](LICENSE)
+[![Status: Beta](https://img.shields.io/badge/Status-Beta-orange)](https://github.com/LZKgood/NoTabKana/releases)
 
-**NoTabKana** は、AutoHotkey v2 で開発された日本語入力支援スクリプトです。Windows 標準の Microsoft 日本語 IME における変換候補の選択操作を効率化し、macOS のようなスムーズな日本語入力環境を目指しています。
+[**Features**](#features) · [**Installation**](#installation) · [**Key Bindings**](#key-bindings) · [**Limitations**](#known-limitations) · [**Changelog**](#changelog)
 
-**NoTabKana** 是一款基于 AutoHotkey v2 开发的日语输入增强脚本，旨在优化 Windows 内置微软日语输入法的候选词选择流程，减少重复按键操作，带来更接近 macOS 的流畅日语输入体验。
+</div>
 
-> **⚠️ Beta Release / ベータ版 / 测试版 — v1.3.5-Beta**
+> [!NOTE]
+> **NoTabKana** is a lightweight AutoHotkey v2 helper for the built-in Microsoft Japanese IME on Windows. It streamlines candidate selection and aims to make Japanese typing feel more fluid, with a workflow inspired by macOS.
+>
+> **日本語：** AutoHotkey v2 で開発された、Windows 標準の Microsoft 日本語 IME 向け入力支援スクリプトです。変換候補の選択操作を効率化し、よりスムーズな日本語入力を目指します。
+>
+> **简体中文：** NoTabKana 是一款基于 AutoHotkey v2 开发的 Windows 微软日语输入法增强脚本，旨在简化候选词选择操作，让日语输入更加流畅，并借鉴 macOS 的输入体验。
+
+| **Platform** | **Input method** | **Implementation** | **License** |
+|:---:|:---:|:---:|:---:|
+| Windows 10 / 11 | Microsoft Japanese IME | AutoHotkey v2 | MIT |
+
+> [!WARNING]
+> **Beta release / ベータ版 / 测试版 — v1.3.5-Beta**
 >
 > This project is still under development. Some behaviors may vary depending on the IME state, Windows version, and application. Please read the limitations before daily use.
 >
@@ -22,28 +37,19 @@
 
 ---
 
-## 📑 Table of Contents / 目次 / 目录
+## 🧭 Navigate the README / 目次 / 文档导航
 
-- ✨ [Features / 機能 / 功能](#-features--機能--功能)
-- ⌨️ [Key Bindings / キー操作 / 按键说明](#-key-bindings--キー操作--按键说明)
-- 🚀 [Requirements / 動作環境 / 运行环境](#-requirements--動作環境--运行环境)
-- 📥 [Installation / インストール / 安装](#-installation--インストール--安装)
-- 💡 [Usage Examples / 使用例 / 使用示例](#-usage-examples--使用例--使用示例)
-- ⚙️ [How It Works / 仕組み / 工作原理](#️-how-it-works--仕組み--工作原理)
-- 🔄 [Why Down Instead of Tab? / Tab ではなく Down を使う理由 / 为什么使用 Down 而不是 Tab](#-why-down-instead-of-tab--tab-ではなく-down-を使う理由--为什么使用-down-而不是-tab)
-- 🧪 [Self-Test / セルフテスト / 自检](#-self-test--セルフテスト--自检)
-- ⚠️ [Known Limitations / 制限事項 / 已知限制](#-known-limitations--制限事項--已知限制)
-- 🔄 [Changelog / 更新履歴 / 更新日志](#-changelog--更新履歴--更新日志)
-- 🛠️ [Troubleshooting / トラブルシューティング / 故障排查](#-troubleshooting--トラブルシューティング--故障排查)
-- 🤝 [Contributing / コントリビューション / 参与贡献](#-contributing--コントリビューション--参与贡献)
-- 📄 [License / ライセンス / 许可证](#-license--ライセンス--许可证)
-- ⚠️ [Disclaimer / 免責事項 / 免责声明](#️-disclaimer--免責事項--免责声明)
+| Getting started | Design & reliability | Project information |
+|---|---|---|
+| ✨ [Features / 機能 / 功能](#features)<br>⌨️ [Key bindings / キー操作 / 按键说明](#key-bindings)<br>🚀 [Requirements / 動作環境 / 运行环境](#requirements)<br>📥 [Installation / インストール / 安装](#installation)<br>💡 [Usage examples / 使用例 / 使用示例](#usage-examples) | ⚙️ [How it works / 仕組み / 工作原理](#how-it-works)<br>🧠 [Why not IMM32? / IMM32 API を使わない理由](#design-tradeoff)<br>🔄 [Why Down instead of Tab?](#why-down-instead-of-tab)<br>🧪 [Self-test / 自检](#self-test)<br>⚠️ [Known limitations / 已知限制](#known-limitations) | 🔄 [Changelog / 更新日志](#changelog)<br>🛠️ [Troubleshooting / 故障排查](#troubleshooting)<br>🤝 [Contributing / 参与贡献](#contributing)<br>📄 [License / 许可证](#license)<br>⚠️ [Disclaimer / 免责声明](#disclaimer) |
 
 ---
 
+<a id="features"></a>
+
 ## ✨ Features / 機能 / 功能
 
-### English
+### 🇬🇧 English
 
 - **Number-key candidate selection:** Use a number key to select a conversion candidate after tracked Japanese input.
 - **Simplified candidate navigation:** Use `=` and `-` for candidate navigation and long-vowel-mark input.
@@ -54,7 +60,7 @@
 - **Letter-key passthrough:** Allow letter keystrokes to continue to the underlying input system while the script tracks input.
 - **Built-in self-tests:** Run automated logic checks without performing the normal candidate-selection actions during the test handlers.
 
-### 日本語
+### 🇯🇵 日本語
 
 - **数字キーによる候補選択：** 日本語入力を追跡している状態で数字キーを押すと、変換候補の選択を補助します。
 - **候補操作の簡略化：** `=` と `-` を使って候補の移動や長音記号の入力を行います。
@@ -65,7 +71,7 @@
 - **英字キーの透過：** スクリプトが入力を追跡している間も、英字キーの入力を下位の入力システムへ通します。
 - **セルフテスト機能：** 通常の候補選択操作を行わずに、スクリプトのロジックを自動テストできます。
 
-### 简体中文
+### 🇨🇳 简体中文
 
 - **数字键选择候选词：** 在脚本追踪到日语输入后，按数字键辅助选择转换候选词。
 - **简化候选词翻页：** 使用 `=` 和 `-` 进行候选词导航或输入长音符号。
@@ -77,6 +83,8 @@
 - **内置自检：** 运行自动化逻辑测试；测试处理程序不会执行正常的候选词选择操作。
 
 ---
+
+<a id="key-bindings"></a>
 
 ## ⌨️ Key Bindings / キー操作 / 按键说明
 
@@ -99,9 +107,11 @@
 
 ---
 
+<a id="requirements"></a>
+
 ## 🚀 Requirements / 動作環境 / 运行环境
 
-### English
+### 🇬🇧 English
 
 - **Operating system:** Windows 10 or Windows 11
 - **Runtime:** AutoHotkey v2
@@ -110,7 +120,7 @@
 
 Third-party IMEs such as Google Japanese Input and ATOK are not officially supported.
 
-### 日本語
+### 🇯🇵 日本語
 
 - **OS：** Windows 10 または Windows 11
 - **実行環境：** AutoHotkey v2
@@ -119,7 +129,7 @@ Third-party IMEs such as Google Japanese Input and ATOK are not officially suppo
 
 Google 日本語入力や ATOK などのサードパーティ製 IME は、公式サポートの対象外です。
 
-### 简体中文
+### 🇨🇳 简体中文
 
 - **操作系统：** Windows 10 或 Windows 11
 - **运行环境：** AutoHotkey v2
@@ -130,9 +140,11 @@ Google 日语输入法、ATOK 等第三方输入法暂不属于官方支持范�
 
 ---
 
+<a id="installation"></a>
+
 ## 📥 Installation / インストール / 安装
 
-### English
+### 🇬🇧 English
 
 1. Install [AutoHotkey v2](https://www.autohotkey.com/).
 2. Open the [NoTabKana GitHub repository](https://github.com/LZKgood/NoTabKana/tree/main).
@@ -143,7 +155,7 @@ Google 日语输入法、ATOK 等第三方输入法暂不属于官方支持范�
 
 To stop the script, right-click its system-tray icon and select the exit option.
 
-### 日本語
+### 🇯🇵 日本語
 
 1. [AutoHotkey v2](https://www.autohotkey.com/) をインストールします。
 2. [NoTabKana の GitHub リポジトリ](https://github.com/LZKgood/NoTabKana/tree/main) を開きます。
@@ -154,7 +166,7 @@ To stop the script, right-click its system-tray icon and select the exit option.
 
 終了するには、タスクトレイのアイコンを右クリックし、終了メニューを選択してください。
 
-### 简体中文
+### 🇨🇳 简体中文
 
 1. 安装 [AutoHotkey v2](https://www.autohotkey.com/)。
 2. 打开 [NoTabKana 的 GitHub 仓库](https://github.com/LZKgood/NoTabKana/tree/main)。
@@ -166,6 +178,8 @@ To stop the script, right-click its system-tray icon and select the exit option.
 如需退出脚本，右键单击系统托盘中的图标，然后选择退出。
 
 ---
+
+<a id="usage-examples"></a>
 
 ## 💡 Usage Examples / 使用例 / 使用示例
 
@@ -253,9 +267,11 @@ The intended result is `ビール`. The exact output depends on how the active I
 
 ---
 
+<a id="how-it-works"></a>
+
 ## ⚙️ How It Works / 仕組み / 工作原理
 
-### English
+### 🇬🇧 English
 
 NoTabKana uses keyboard-event tracking and an internal romaji buffer rather than reading the Microsoft IME's private composition buffer.
 
@@ -269,7 +285,7 @@ Its workflow is:
 
 The internal buffer is only an estimate of the IME's actual composition. It cannot perfectly detect every edit or state change made by the IME itself.
 
-### 日本語
+### 🇯🇵 日本語
 
 NoTabKana は、Microsoft IME の非公開の変換バッファを直接読み取るのではなく、キーボードイベントと内部のローマ字バッファを使って入力状態を追跡します。
 
@@ -283,7 +299,7 @@ NoTabKana は、Microsoft IME の非公開の変換バッファを直接読み�
 
 内部バッファは IME の実際の変換状態を推定したものです。IME 側で発生するすべての編集や状態変化を完全に検出できるわけではありません。
 
-### 简体中文
+### 🇨🇳 简体中文
 
 NoTabKana 不会直接读取微软输入法的私有组合缓冲区，而是通过键盘事件和内部罗马字缓冲区追踪输入状态。
 
@@ -299,9 +315,99 @@ NoTabKana 不会直接读取微软输入法的私有组合缓冲区，而是通�
 
 ---
 
+<a id="design-tradeoff"></a>
+
+## 🧠 Design Tradeoff: Why Not Use IMM32 IME API Directly / 設計上のトレードオフ：IMM32 IME APIを直接使わない理由 / 设计取舍：为何不直接调用 IMM32 IME API
+
+### 🇬🇧 English
+
+Many Japanese input helper tools use IMM32 API such as `ImmGetCompositionStringW` to read IME composition text. However, **NoTabKana does NOT rely on native IME APIs**. Instead, it uses a self-managed local romaji buffer parser. The reasons:
+
+1. IMM32 API can only read **converted kana text**, not the raw romaji keys you typed.
+   Microsoft Japanese IME converts romaji to kana internally. IMM API returns only kana characters like `か` or `きゃ`. It cannot get the original input sequence like `ka` / `kya`.
+   This project relies on raw romaji string to split kana units, detect sokuon(っ), youon(拗音) and implement unit-wise backspace (erase whole kana unit in one backspace press). Without raw romaji, these core features cannot be implemented.
+
+2. Poor compatibility across popular applications.
+   IMM32 only works on native Win32 windows (e.g. Notepad). It fails on:
+   - Chromium / Electron apps: Chrome, VSCode, Obsidian, Discord
+   - UWP apps and most games (UIPI security isolation blocks IME context access)
+   When API read fails, candidate selection / page flipping features break entirely.
+
+3. IME message event timing is uncontrollable and introduces latency.
+   `WM_IME_COMPOSITION` fires **after IME updates its composition buffer**. There is inherent delay between keypress and message arrival, which breaks the real-time romaji parsing required for this script.
+
+4. Candidate list parsing is fragile across Windows versions.
+   Although `GCS_CANDIDATES` exists for reading candidates, the memory layout varies on different Windows builds. Parsing code is easy to break on different user environments. And it still cannot retrieve raw romaji.
+
+5. Bound exclusively to Microsoft Japanese IME.
+   IMM32 API only works for Microsoft IME. It stops working completely if users switch to Google Japanese Input, ATOK or other third-party Japanese IME.
+   The current keystroke-based implementation has no hard dependency on a specific IME backend.
+
+> Optional branch note:
+> An optional IMM API branch can be implemented for cross-checking kana state, but it **cannot replace the local romaji parser**. Removing local buffer entirely will lose unit backspace and romaji parsing features.
+
+### 🇯🇵 日本語
+
+多くの日本語入力補助ツールは`ImmGetCompositionStringW`などIMM32 APIを利用し、IMEの変換中テキストを読み取ります。しかし本プロジェクト NoTabKana では**IMEのネイティブAPIに依存せず、ローカルでローマ字バッファを管理・解析する方式を採用しています**。理由は以下の通りです。
+
+1. IMM32 APIは**変換後の仮名しか取得できず、入力した元のローマ字文字列を取得できない**
+Microsoft日本語IMEは内部でローマ字を仮名に変換します。IMM APIから取得できるのは「か」「きゃ」のような仮名だけで、打ち込んだ`ka`や`kya`といった元のローマ字シーケンスは取得不可能です。
+本ツールのコア機能はローマ字文字列をもとに仮名単位へ分割、促音・拗音・「ん」の判別、**単位単位のバックスペース（拗音を一括削除）**を実現しています。元のローマ字が取得できない場合、これらの機能を実装できません。
+
+2. 対応アプリケーションの互換性が極端に低い
+IMM32 APIはメモ帳など**標準Win32ウィンドウでのみ正常動作**します。
+Electron/Chromium製アプリ(Chrome、VSCode、Obsidian、Discord)、UWPアプリ、多くのゲームではUIPIのセキュリティ制限によりIMEコンテキストを取得できず読み取りが失敗します。APIが失敗すると候補選択・ページ送り機能が完全に動作しなくなります。
+
+3. IMEイベントの発火タイミング制御が難しく、遅延や状態のズレが発生する
+`WM_IME_COMPOSITION`メッセージはIME内部の変換完了後に送られるため、キー入力からイベントまでに遅延が発生します。リアルタイムでローマ字解析を行う本スクリプトには不向きです。
+
+4. 候補一覧取得APIはWindowsバージョン間で挙動が不安定
+`GCS_CANDIDATES`で候補リストを読み出すことは可能ですが、Windowsのバージョンごとにメモリレイアウトに差異があり、環境によって動作しない可能性が高いです。また、元のローマ字が取得できない根本的な問題は解決しません。
+
+5. Microsoft日本語IME専用になってしまう
+IMM32はWindows標準Microsoft IME向けのAPIです。Google日本語入力、ATOKなど他の日本語IMEに切り替えると、API機能が完全に動作しなくなります。
+現在のキー入力を監視する実装は特定IMEに依存しないため、拡張性が高いです。
+
+> 補足：
+> IMM APIをオプション機能として追加し、仮名の状態を検証する分岐は作成可能です。ただし**ローカルローマ字パーサーの代替にはなりません**。ローカルバッファを完全に削除しIME API依存にすると、単位バックスペースやローマ字解析機能が失われます。
+
+### 🇨🇳 简体中文
+
+很多同类日语输入辅助工具会使用 `ImmGetCompositionStringW` 等 IMM32 API 读取输入法预编辑文本。本项目 **NoTabKana** 最终选择**不依赖 IME 原生API**，采用**本地罗马音缓冲区自主解析**方案，原因如下：
+
+1. **IMM32 API 只能读取「已经转换完成的假名」，无法获取用户输入的原始罗马音**
+微软日语IME内部流程：用户输入罗马音 → IME内部转换为假名。IMM API 拿到的输出只有假名文本（`か`、`きゃ`、`っ`），**拿不到用户敲的原始字母序列 `ka` / `kya` / `tta`**。
+本项目核心逻辑依赖罗马音串进行假名单元拆分、促音/拗音/ん识别、单元级退格（一键删除整个拗音，而不是单个字符）。缺少原始罗马音，精细的单元退格、罗马音语法解析功能无法实现。
+
+2. **API 兼容性严重受限，大量常用软件直接读取失败**
+IMM32 仅对**标准Win32原生窗口（记事本等）**有效。
+- 基于 Electron / Chromium 的软件：Chrome、VSCode、Obsidian、Discord 等网页壳程序，IME上下文隔离，`ImmGetContext` 返回空，读取失败。
+- UWP应用、大部分游戏输入框：UIPI权限隔离，无法获取IME合成文本。
+一旦API读取失败，脚本候选选词、翻页全部失效，体验不稳定。
+
+3. **事件触发时机不可控，容易产生状态不同步**
+IME的 `WM_IME_COMPOSITION` 消息是**IME内部状态变更后才推送**。按键按下 → 系统处理IME → 触发消息，存在延迟。
+本脚本需要**按键按下瞬间立刻处理罗马音缓存**，依赖API事件会造成按键处理滞后、候选选词时序错乱。
+
+4. **候选词读取接口复杂，跨Windows版本行为不一致**
+虽然 IMM32 支持读取候选列表（`GCS_CANDIDATES`），但不同Windows版本、补丁下，候选数据内存排布有差异，解析代码极易在部分用户环境报错。
+并且读取候选词依然**不能解决上面「无原始罗马音」的核心缺陷**。
+
+5. **绑定微软日语IME，换输入法直接失效**
+IMM这套API是Windows微软自带日文IME专属。如果用户切换到 Google日本入力、ATOK等第三方日语输入法，整个IME API模块直接失效。
+当前按键捕获方案不绑定特定IME底层接口，扩展性更强。
+
+> ✅ 备选方案说明：
+> 理论上可以做「IMM API可选分支」，用API读取假名做状态校验，但**不能完全替换本地罗马音解析缓冲区**，只能作为辅助校正，无法替代核心逻辑。
+> 若强行完全移除本地缓冲区、全部依赖IME API，会直接丢失核心特性：**单元级智能退格、促音/拗音罗马音解析**。
+
+---
+
+<a id="why-down-instead-of-tab"></a>
+
 ## 🔄 Why Down Instead of Tab? / Tab ではなく Down を使う理由 / 为什么使用 Down 而不是 Tab
 
-### English
+### 🇬🇧 English
 
 Earlier versions of NoTabKana used `Tab` to initiate candidate selection. In v1.3.5-Beta, the script uses `Down` (`↓`) as its default candidate-navigation key sequence.
 
@@ -313,7 +419,7 @@ The reasons for this design change are:
 
 This change does not guarantee that `Down` will behave identically in every IME state. Microsoft Japanese IME may handle `Down` differently depending on whether composition, conversion, or a candidate list is active.
 
-### 日本語
+### 🇯🇵 日本語
 
 以前の NoTabKana では、候補選択を開始するために `Tab` を使用していました。v1.3.5-Beta では、候補操作の既定キーとして `Down`（`↓`）を使用する方式に変更しました。
 
@@ -325,7 +431,7 @@ This change does not guarantee that `Down` will behave identically in every IME 
 
 ただし、すべての IME 状態で `Down` が同じように動作することを保証するものではありません。変換中か、候補一覧が表示されているかなどによって、Microsoft 日本語 IME の動作は異なる場合があります。
 
-### 简体中文
+### 🇨🇳 简体中文
 
 早期版本的 NoTabKana 使用 `Tab` 启动候选词选择流程。从 v1.3.5-Beta 开始，默认改用 `Down`（`↓`）作为候选导航按键。
 
@@ -339,9 +445,11 @@ This change does not guarantee that `Down` will behave identically in every IME 
 
 ---
 
+<a id="self-test"></a>
+
 ## 🧪 Self-Test / セルフテスト / 自检
 
-### English
+### 🇬🇧 English
 
 NoTabKana includes a built-in test mode for checking supported script logic without running the normal candidate-selection handlers.
 
@@ -355,7 +463,7 @@ Replace `NoTabKana.ahk` with the actual script filename. Check the script direct
 
 A successful self-test indicates that the tested logic passed. It does **not** prove that synthetic key events will behave correctly in every Microsoft IME state or application.
 
-### 日本語
+### 🇯🇵 日本語
 
 NoTabKana には、通常の候補選択処理を実行せずに、対応するスクリプトロジックを確認するためのテストモードがあります。
 
@@ -369,7 +477,7 @@ AutoHotkey.exe "NoTabKana.ahk" test
 
 セルフテストの成功は、テスト対象のロジックが正常に動作したことを示します。ただし、すべての Microsoft IME の状態やアプリケーションで、合成キー入力が正常に動作することを保証するものではありません。
 
-### 简体中文
+### 🇨🇳 简体中文
 
 NoTabKana 内置了测试模式，可以在不执行常规候选词选择处理程序的情况下，检查脚本中的部分逻辑。
 
@@ -385,9 +493,11 @@ AutoHotkey.exe "NoTabKana.ahk" test
 
 ---
 
+<a id="known-limitations"></a>
+
 ## ⚠️ Known Limitations / 制限事項 / 已知限制
 
-### English
+### 🇬🇧 English
 
 Please keep the following limitations in mind:
 
@@ -398,7 +508,7 @@ Please keep the following limitations in mind:
 5. **Compatibility is limited.** Third-party IMEs and unusual application environments have not been established as supported targets.
 6. **Beta stability is not guaranteed.** The script may need further testing and adjustment.
 
-### 日本語
+### 🇯🇵 日本語
 
 次の制限事項にご注意ください。
 
@@ -409,7 +519,7 @@ Please keep the following limitations in mind:
 5. **互換性には制限があります。** サードパーティ製 IME や特殊なアプリケーション環境での動作は、サポート対象として確立されていません。
 6. **ベータ版の安定性は保証されません。** 今後も検証や調整が必要になる可能性があります。
 
-### 简体中文
+### 🇨🇳 简体中文
 
 请注意以下限制：
 
@@ -421,6 +531,8 @@ Please keep the following limitations in mind:
 6. **测试版稳定性不作保证。** 项目仍可能需要进一步测试和调整。
 
 ---
+
+<a id="changelog"></a>
 
 ## 🔄 Changelog / 更新履歴 / 更新日志
 
@@ -464,9 +576,11 @@ Please keep the following limitations in mind:
 
 ---
 
+<a id="troubleshooting"></a>
+
 ## 🛠️ Troubleshooting / トラブルシューティング / 故障排查
 
-### English
+### 🇬🇧 English
 
 **The number key does not select a candidate.**
 
@@ -487,7 +601,7 @@ Please keep the following limitations in mind:
 - Check the script filename and executable path.
 - Review any error message and the generated `selftest.log`, if available.
 
-### 日本語
+### 🇯🇵 日本語
 
 **数字キーで候補を選択できない場合**
 
@@ -508,7 +622,7 @@ Please keep the following limitations in mind:
 - スクリプトのファイル名と実行ファイルのパスを確認してください。
 - エラーメッセージと、生成されている場合は `selftest.log` を確認してください。
 
-### 简体中文
+### 🇨🇳 简体中文
 
 **按数字键无法选择候选词**
 
@@ -531,9 +645,11 @@ Please keep the following limitations in mind:
 
 ---
 
+<a id="contributing"></a>
+
 ## 🤝 Contributing / コントリビューション / 参与贡献
 
-### English
+### 🇬🇧 English
 
 Contributions are welcome, including:
 
@@ -545,7 +661,7 @@ Contributions are welcome, including:
 
 Before submitting a report, please check existing Issues and include your Windows version, AutoHotkey v2 version, reproduction steps, and expected versus actual behavior.
 
-### 日本語
+### 🇯🇵 日本語
 
 以下のような貢献を歓迎します。
 
@@ -557,7 +673,7 @@ Before submitting a report, please check existing Issues and include your Window
 
 報告の前に既存の Issue を確認し、Windows と AutoHotkey v2 のバージョン、再現手順、期待する動作と実際の動作を記載してください。
 
-### 简体中文
+### 🇨🇳 简体中文
 
 欢迎通过以下方式参与项目：
 
@@ -571,25 +687,29 @@ Before submitting a report, please check existing Issues and include your Window
 
 ---
 
+<a id="license"></a>
+
 ## 📄 License / ライセンス / 许可证
 
-### English
+### 🇬🇧 English
 
 This project is released under the [MIT License](LICENSE). See the `LICENSE` file for the complete license text.
 
-### 日本語
+### 🇯🇵 日本語
 
 本プロジェクトは [MIT License](LICENSE) のもとで公開されています。ライセンスの全文は `LICENSE` ファイルをご確認ください。
 
-### 简体中文
+### 🇨🇳 简体中文
 
 本项目采用 [MIT License](LICENSE) 开源许可证。完整许可条款请参阅仓库中的 `LICENSE` 文件。
 
 ---
 
+<a id="disclaimer"></a>
+
 ## ⚠️ Disclaimer / 免責事項 / 免责声明
 
-### English
+### 🇬🇧 English
 
 NoTabKana is provided **as is**, without warranties of any kind, to the extent permitted by applicable law.
 
@@ -597,7 +717,7 @@ The script sends keyboard events and tracks input state. Unexpected behavior may
 
 Use the beta version at your own discretion. Please save important work before testing and report reproducible issues through GitHub Issues.
 
-### 日本語
+### 🇯🇵 日本語
 
 NoTabKana は、適用される法律で認められる範囲において、いかなる保証も付さず「現状のまま」提供されます。
 
@@ -605,7 +725,7 @@ NoTabKana は、適用される法律で認められる範囲において、い�
 
 ベータ版の利用は自己責任でお願いします。テスト前に重要な作業を保存し、再現可能な問題は GitHub Issues から報告してください。
 
-### 简体中文
+### 🇨🇳 简体中文
 
 NoTabKana 按「现状」提供，在适用法律允许的范围内不作任何形式的保证。
 
@@ -615,6 +735,6 @@ NoTabKana 按「现状」提供，在适用法律允许的范围内不作任何�
 
 ---
 
-**Made for a smoother Japanese typing workflow.**  
-**より快適な日本語入力環境を目指して。**  
+**Made for a smoother Japanese typing workflow.**
+**より快適な日本語入力環境を目指して。**
 **让日语输入更加流畅。**
