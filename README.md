@@ -9,7 +9,7 @@
 [![AutoHotkey v2](https://img.shields.io/badge/AutoHotkey-v2-blue?logo=autohotkey&logoColor=white)](https://www.autohotkey.com/)
 [![Windows 10/11](https://img.shields.io/badge/Windows-10%20%7C%2011-0078D4?logo=windows&logoColor=white)](https://www.microsoft.com/windows)
 [![License: MIT](https://img.shields.io/badge/License-MIT-2ea44f.svg)](LICENSE)
-[![Status: Beta](https://img.shields.io/badge/Status-Beta-orange)](https://github.com/LZKgood/NoTabKana/releases)
+[![Status: Stable](https://img.shields.io/badge/Status-Stable-brightgreen)](https://github.com/LZKgood/NoTabKana/releases)
 
 [**Features**](#features) · [**Installation**](#installation) · [**Key Bindings**](#key-bindings) · [**Limitations**](#known-limitations) · [**Changelog**](#changelog)
 
@@ -27,13 +27,13 @@
 | Windows 10 / 11 | Microsoft Japanese IME | AutoHotkey v2 | MIT |
 
 > [!WARNING]
-> **Beta release / ベータ版 / 测试版 — v1.3.5-Beta**
+> **Stable release / 安定版 / 正式版 — v1.3.6**
 >
-> This project is still under development. Some behaviors may vary depending on the IME state, Windows version, and application. Please read the limitations before daily use.
+> v1.3.6 is the current stable release. Stable means this version has been formally released; it does not imply perfect compatibility with every IME state, Windows configuration, or application. Please review the known limitations.
 >
-> 本プロジェクトは開発・検証中です。IME の状態、Windows のバージョン、使用するアプリケーションによって動作が異なる場合があります。日常的に使用する前に、制限事項をご確認ください。
+> v1.3.6 は現在の正式リリースです。安定版は正式にリリースされたバージョンを意味し、すべての IME 状態、Windows 環境、アプリケーションでの完全な互換性を保証するものではありません。既知の制限事項をご確認ください。
 >
-> 本项目仍处于开发和测试阶段。实际行为可能受到输入法状态、Windows 版本及应用程序的影响。日常使用前，请先阅读限制说明。
+> v1.3.6 是当前正式发布的稳定版本。“正式版”表示该版本已正式发布，并不意味着它能与所有输入法状态、Windows 配置和应用程序完美兼容。请先阅读已知限制。
 
 ---
 
@@ -536,54 +536,10 @@ Please keep the following limitations in mind:
 
 ## 🔄 Changelog / 更新履歴 / 更新日志
 
----
-## v1.3.6
-### 版本概要
-中文：
-v1.3.6 优化版本，**核心修复数字键穿透异常问题**，无新增功能，其余逻辑和 v1.3.5 保持一致。
-
-日本語：
-v1.3.6 最適化リリース。**数字キーの透過不具合を主に修正**、新機能追加はなく、その他の動作は v1.3.5 と同一です。
-
-English：
-v1.3.6 optimization release. **Main fix: number key pass-through issue.** No new features. All other behaviors are consistent with v1.3.5.
-
-### 主要更新 / 主な変更点 / Major Changes
-1. 【核心修复 / 核心修正 / Core Fix】重构数字键热键判定逻辑，解决旧版日语输入法下，未在假名输入状态时数字键依然被脚本捕获的穿透问题。
-    - 中文：现在仅日语IME(LangID=1041) + 假名输入模式开启时，才接管数字按键处理候选；不在假名输入状态时，数字键原生直接穿透，AHK不再拦截，消除多余开销与微小延迟。
-    - 日本語：日本語IME(1041) かつ 仮名入力モード有効時のみ数字キーを捕捉して変換候補操作を実行；仮名入力モードがオフの場合、数字キーはシステム側にそのまま透過、AHKの介入がなくなり、余分な処理と微細な遅延を除去。
-    - English：Number keys are only intercepted for candidate selection when Japanese IME (LangID=1041) AND kana mode is active; When kana mode is off, number keys pass natively to system without AHK interception, removing redundant overhead and minor latency.
-
-2. 中文：代码改为静态热键声明，结构更清晰，便于后续维护迭代。
-    日本語：ホットキーを静的定義に変更、コード構造が整理され保守しやすくなった。
-    English：Rewrote hotkeys as static declarations for cleaner code and easier maintenance.
-
-3. 中文：完全向下兼容：罗马音解析、退格防抖、看门狗、候选翻页等全部原有逻辑不变，自检全部通过。
-    日本語：完全な下位互換：ローマ字解析、バックスペースデバウンス、ウォッチドッグ、候補ページ送りなど既存機能は全てそのまま、自動テストも全て合格。
-    English：Full backward compatibility: Romaji parser, backspace debounce, watchdog, candidate page controls and other functions unchanged. All self-tests passed.
-
----
-## v1.3.5-Beta
-### 更新内容
-**简体中文**
-- 围绕内部罗马字缓冲区和解析器，重新整理输入追踪机制。
-- 增加对常见假名组合的识别，包括拗音、促音和拨音相关序列。
-- 通过防抖机制改进 Backspace 状态追踪。
-- 增加针对窗口变化、输入语言变化、无操作超时和候选页超时的状态恢复检查。
-- 将候选操作的启动方式从 `Tab` 改为 `Down`。
-- 增加内置自检模式。
-- 调整输入状态追踪与重置逻辑。
-
-**日本語**
-- 内部ローマ字バッファと解析処理を中心に、入力追跡の仕組みを見直しました。
-- 拗音、促音、撥音を含む一般的なかな入力パターンの認識を追加しました。
-- デバウンス処理により Backspace の追跡を改善しました。
-- ウィンドウ変更、入力言語変更、無操作時間、候補ページのタイムアウトに対する状態復旧処理を追加しました。
-- 候補操作の開始方法を `Tab` から `Down` に変更しました。
-- セルフテストモードを追加しました。
-- 入力状態の追跡とリセット処理を調整しました。
+### v1.3.5-Beta
 
 **English**
+
 - Reworked input tracking around an internal romaji buffer and parser.
 - Added recognition of common kana combinations, including contracted sounds, geminate consonants, and syllabic nasal sequences.
 - Improved Backspace tracking with a debounce mechanism.
@@ -592,11 +548,31 @@ v1.3.6 optimization release. **Main fix: number key pass-through issue.** No new
 - Included a built-in self-test mode.
 - Refined input-state tracking and reset handling.
 
-> ⚠️ Behavior change / 動作変更 / 行为变更
-> English: The candidate-entry key sequence changed from the earlier `Tab`-based approach to the current `Down`-based approach. Results may differ from previous versions.
-> 日本語：候補操作のキーシーケンスを従来の `Tab` 方式から `Down` 方式へ変更しました。以前のバージョンとは結果が異なる場合があります。
-> 简体中文：候选操作按键序列从早期版本的 `Tab` 方案改为当前的 `Down` 方案，实际效果可能与旧版本不同。
+**日本語**
 
+- 内部ローマ字バッファと解析処理を中心に、入力追跡の仕組みを見直しました。
+- 拗音、促音、撥音を含む一般的なかな入力パターンの認識を追加しました。
+- デバウンス処理により Backspace の追跡を改善しました。
+- ウィンドウ変更、入力言語変更、無操作時間、候補ページのタイムアウトに対する状態復旧処理を追加しました。
+- 候補操作の開始方法を `Tab` から `Down` に変更しました。
+- セルフテストモードを追加しました。
+- 入力状態の追跡とリセット処理を調整しました。
+
+**简体中文**
+
+- 围绕内部罗马字缓冲区和解析器，重新整理输入追踪机制。
+- 增加对常见假名组合的识别，包括拗音、促音和拨音相关序列。
+- 通过防抖机制改进 Backspace 状态追踪。
+- 增加针对窗口变化、输入语言变化、无操作超时和候选页超时的状态恢复检查。
+- 将候选操作的启动方式从 `Tab` 改为 `Down`。
+- 增加内置自检模式。
+- 调整输入状态追踪与重置逻辑。
+
+> **Behavior change / 動作変更 / 行为变更：** The candidate-entry key sequence changed from the earlier `Tab`-based approach to the current `Down`-based approach. Results may differ from previous versions.
+
+> **動作変更：** 候補操作のキーシーケンスを従来の `Tab` 方式から `Down` 方式へ変更しました。以前のバージョンとは結果が異なる場合があります。
+
+> **行为变更：** 候选操作按键序列从早期版本的 `Tab` 方案改为当前的 `Down` 方案，实际效果可能与旧版本不同。
 
 ---
 
