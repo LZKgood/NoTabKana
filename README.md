@@ -536,10 +536,50 @@ Please keep the following limitations in mind:
 
 ## 🔄 Changelog / 更新履歴 / 更新日志
 
-### v1.3.5-Beta
+## Changelog
+### v1.3.6
+> Optimization release, bugfix only, no new features. Fully backward compatible with｜最適化リリース、不具合修正のみで新機能追加なし。v1.3.5と完全に下位互換があります。｜优化版本，仅Bug修复，无新增功能。与v1.3.5完全向下兼容。
+
+> v1.3.5.
+
+**简体中文**
+1. 【核心修复】重构数字键热键判定逻辑，解决旧版日语输入法下，未在假名输入状态时数字键依然被脚本捕获的穿透问题。
+   - 现在仅日语IME(LangID=1041) + 假名输入模式开启时，才接管数字按键处理候选；
+   - 不在假名输入状态时，数字键原生直接穿透，AHK不再拦截，消除多余开销与微小延迟。
+2. 代码改为静态热键声明，结构更清晰，便于后续维护迭代。
+3. 完全向下兼容：罗马音解析、退格防抖、看门狗、候选翻页等全部原有逻辑不变，自检全部通过。
+4. 【优化】优化按键消息拦截逻辑，**避免抢占键盘消息**。游戏、BongoCat桌宠等第三方程序可正常接收键盘输入，解决因脚本劫持按键导致桌宠动作失效、游戏按键无响应的问题。
 
 **English**
+1. 【Core Fix】Refactored number key hotkey condition. Fixed the pass-through bug in old version: number keys were captured by script even when kana input was inactive under Japanese IME.
+   - Number keys are only intercepted for candidate selection when Japanese IME (LangID=1041) AND kana mode is active;
+   - When kana mode is off, number keys pass natively to system without AHK interception, removing redundant overhead and minor latency.
+2. Rewrote hotkeys as static declarations for cleaner code and easier maintenance.
+3. Full backward compatibility: Romaji parser, backspace debounce, watchdog, candidate page controls and other functions unchanged. All self-tests passed.
+4. 【Optimization】Improved key interception logic to prevent grabbing keyboard messages. Third-party applications such as games and BongoCat desktop pet can receive keyboard input normally. Fixed the issue where the script occupied key messages and caused desktop pet actions or in-game key inputs to stop working.
 
+**日本語**
+1. 【核心修正】数字キーのホットキー判定ロジックを再構築。旧バージョンで、仮名入力中ではないにもかかわらず数字キーがスクリプトに捕捉されてしまう透過問題を解消。
+   - 日本語IME(1041) かつ 仮名入力モード有効時のみ数字キーを捕捉して変換候補操作を実行；
+   - 仮名入力モードがオフの場合、数字キーはシステム側にそのまま透過、AHKの介入がなくなり、余分な処理と微細な遅延を除去。
+2. ホットキーを静的定義に変更、コード構造が整理され保守しやすくなった。
+3. 完全な下位互換：ローマ字解析、バックスペースデバウンス、ウォッチドッグ、候補ページ送りなど既存機能は全てそのまま、自動テストも全て合格。
+4. 【最適化】キー入力の横取りを回避するように処理ロジックを改善。ゲームやBongoCatデスクトップペットなどのサードパーティソフトがキー入力を正常に受け取れるようになり、スクリプトによるキー奪取が原因でデスクトップペットの動作やゲームのキー操作が無効になる不具合を解消。
+
+---
+
+### v1.3.5-Beta
+
+**简体中文**
+- 围绕内部罗马字缓冲区和解析器，重新整理输入追踪机制。
+- 增加对常见假名组合的识别，包括拗音、促音和拨音相关序列。
+- 通过防抖机制改进 Backspace 状态追踪。
+- 增加针对窗口变化、输入语言变化、无操作超时和候选页超时的状态恢复检查。
+- 将候选操作的启动方式从 `Tab` 改为 `Down`。
+- 增加内置自检模式。
+- 调整输入状态追踪与重置逻辑。
+
+**English**
 - Reworked input tracking around an internal romaji buffer and parser.
 - Added recognition of common kana combinations, including contracted sounds, geminate consonants, and syllabic nasal sequences.
 - Improved Backspace tracking with a debounce mechanism.
@@ -549,7 +589,6 @@ Please keep the following limitations in mind:
 - Refined input-state tracking and reset handling.
 
 **日本語**
-
 - 内部ローマ字バッファと解析処理を中心に、入力追跡の仕組みを見直しました。
 - 拗音、促音、撥音を含む一般的なかな入力パターンの認識を追加しました。
 - デバウンス処理により Backspace の追跡を改善しました。
@@ -557,27 +596,6 @@ Please keep the following limitations in mind:
 - 候補操作の開始方法を `Tab` から `Down` に変更しました。
 - セルフテストモードを追加しました。
 - 入力状態の追跡とリセット処理を調整しました。
-
-**简体中文**
-
-- 围绕内部罗马字缓冲区和解析器，重新整理输入追踪机制。
-- 增加对常见假名组合的识别，包括拗音、促音和拨音相关序列。
-- 通过防抖机制改进 Backspace 状态追踪。
-- 增加针对窗口变化、输入语言变化、无操作超时和候选页超时的状态恢复检查。
-- 将候选操作的启动方式从 `Tab` 改为 `Down`。
-- 增加内置自检模式。
-- 调整输入状态追踪与重置逻辑。
-
-> **Behavior change / 動作変更 / 行为变更：** The candidate-entry key sequence changed from the earlier `Tab`-based approach to the current `Down`-based approach. Results may differ from previous versions.
-
-> **動作変更：** 候補操作のキーシーケンスを従来の `Tab` 方式から `Down` 方式へ変更しました。以前のバージョンとは結果が異なる場合があります。
-
-> **行为变更：** 候选操作按键序列从早期版本的 `Tab` 方案改为当前的 `Down` 方案，实际效果可能与旧版本不同。
-
----
-
-<a id="troubleshooting"></a>
-
 ## 🛠️ Troubleshooting / トラブルシューティング / 故障排查
 
 ### 🇬🇧 English
