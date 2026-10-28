@@ -2,12 +2,13 @@
 #SingleInstance Off
 #InputLevel 1
 ; =====================================================================
-; NoTabKana v1.3.5 beta.ahk
+; note table kana v1.3.6.ahk 
 ; 日语罗马音输入辅助，仅在日语输入法 LangID=1041 下生效
-;   自检：AutoHotkey.exe "NoTabKana v1.3.5 beta.ahk" test  → 跑完自动退出
+;   自检：AutoHotkey.exe "note table kana v1.3.6.ahk" test  → 跑完自动退出
 ;   无参：常驻后台热键服务
 ; 同步策略：罗马音组合跟踪 + 退格防抖 + 看门狗（失焦/切输入法/空闲/翻页超时）
 ; 不调用任何 IME 私有缓冲接口
+; v1.3.6 改动：数字键改为静态热键 + #HotIf isKanaMode 条件 → 非假名模式物理穿透
 ; =====================================================================
 ; ---- 可调参数 ----
 global PAGE_MS := 1800   ; 翻页状态存活(ms)
@@ -193,7 +194,7 @@ Watchdog() {
 }
 AcquireMutex() {                                         ; 手动单实例：自检不干扰常驻实例
     global gMutex
-    gMutex := DllCall("CreateMutex", "Ptr", 0, "Int", 0, "Str", "notabkana_v131", "Ptr")
+    gMutex := DllCall("CreateMutex", "Ptr", 0, "Int", 0, "Str", "notabkana_v136", "Ptr")
     return (A_LastError != 183)
 }
 SendKey(k) {                                             ; 统一出口：自检只记录不发键
@@ -226,7 +227,7 @@ RunTests() {
     global isKanaMode, pageMode, kanaCount, pageArmedAt, lastActAt, lastHwnd, lastLang
     global bsPending, PAGE_MS, IDLE_MS, RM_BUF, LIT, gDry, gKeys
     try FileDelete(A_ScriptDir "\selftest.log")
-    Say("[selftest] note table kana v1.3.0.ahk")
+    Say("[selftest] note table kana v1.3.6.ahk")
 
     ; ---- 1. 罗马音切分：组合音/促音按 1 个假名计（问题 1、2）----
     for t in ["a=1","ka=1","chi=1","shita=2","kya=1","tsu=1","ja=1","konnichiwa=5","sumimasen=4"
@@ -467,12 +468,27 @@ BackspacePress() {
 ~*RButton::ResetMode()
 
 ; =========注册热键：不带~，捕获按键=========
-Loop 10 {
-    n := A_Index - 1
-    Hotkey("$" n, Num_Block)
-}
 Hotkey("$-", Minus_Block)
 Hotkey("$=", Equal_Block)
+#HotIf
+
+; =====================================================================
+; 数字键：静态定义 + #HotIf isKanaMode 条件
+;   - 静态定义保证 #HotIf 在每次按键时动态求值（而非注册时快照）
+;   - isKanaMode=false → 条件为假 → 热键不激活 → 键盘事件原样透传，零 AHK 介入
+;   - isKanaMode=true  → Num_Block 处理（含 kanaCount=0 的兜底穿透）
+; =====================================================================
+#HotIf GetCurrentLangID() = 1041 && isKanaMode
+$0::Num_Block("$0")
+$1::Num_Block("$1")
+$2::Num_Block("$2")
+$3::Num_Block("$3")
+$4::Num_Block("$4")
+$5::Num_Block("$5")
+$6::Num_Block("$6")
+$7::Num_Block("$7")
+$8::Num_Block("$8")
+$9::Num_Block("$9")
 #HotIf
 
 ; ==================== 常驻启动 ====================
