@@ -2,9 +2,9 @@
 #SingleInstance Off
 #InputLevel 1
 ; =====================================================================
-; note table kana v1.3.6.ahk 
+; NoTabKana v1.3.6 .ahk
 ; 日语罗马音输入辅助，仅在日语输入法 LangID=1041 下生效
-;   自检：AutoHotkey.exe "note table kana v1.3.6.ahk" test  → 跑完自动退出
+;   自检：AutoHotkey.exe "NoTabKana v1.3.6 .ahk" test  → 跑完自动退出
 ;   无参：常驻后台热键服务
 ; 同步策略：罗马音组合跟踪 + 退格防抖 + 看门狗（失焦/切输入法/空闲/翻页超时）
 ; 不调用任何 IME 私有缓冲接口
