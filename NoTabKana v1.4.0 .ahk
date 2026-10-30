@@ -368,9 +368,18 @@ DetectUiLang() {                                         ; ini 记忆优先，�
         return "zh"
     return "en"
 }
+; 写语言记忆；首次创建时给 ini 打上隐藏属性，免得在脚本目录里多出一个文件
+; 返回 true = 这次是新建（自检用）
+WriteUiLang(path, lang) {
+    fresh := !FileExist(path)
+    IniWrite(lang, path, "ui", "Lang")
+    if (fresh)
+        FileSetAttrib("+H", path)              ; 隐藏不影响 IniRead；想手改就先取消隐藏
+    return fresh
+}
 SaveUiLang() {
     global INI_PATH, UI_LANG
-    try IniWrite(UI_LANG, INI_PATH, "ui", "Lang")
+    try WriteUiLang(INI_PATH, UI_LANG)
 }
 
 ; ==================== 托盘 / 暂停 / 调试 ====================
@@ -771,6 +780,18 @@ RunTests() {
     Chk("reason_pending",  KeyReasonKey(1041, 1, true, 0, "k", false), "r_pending")
     Chk("reason_kana",     KeyReasonKey(1041, 1, true, 2, "", false), "r_kana")
     Chk("reason_unknown",  KeyReasonKey(1041, -1, true, 2, "", false), "r_kana")   ; 探测不到 → 走推断
+
+    ; ---- 18. 语言 ini：首次生成自动隐藏、可读、已存在时不改属性 ----
+    tmpIni := A_Temp "\notabkana_selftest.ini"
+    try FileDelete(tmpIni)
+    Chk("ini_fresh_new",   WriteUiLang(tmpIni, "ja"), true)
+    Chk("ini_hidden",      InStr(FileGetAttrib(tmpIni), "H") > 0, true)
+    Chk("ini_readback",    IniRead(tmpIni, "ui", "Lang", ""), "ja")
+    Chk("ini_not_new",     WriteUiLang(tmpIni, "en"), false)
+    Chk("ini_readback2",   IniRead(tmpIni, "ui", "Lang", ""), "en")
+    Chk("ini_kept_hidden", InStr(FileGetAttrib(tmpIni), "H") > 0, true)
+    try FileDelete(tmpIni)
+    Chk("ini_deleted",     FileExist(tmpIni), "")
 
     gDry := false, gFrozen := false, gPaused := false, UI_LANG := "zh", ResetMode()
     Say("RESULT " T_OK "/" (T_OK + T_BAD) (T_BAD ? " FAIL: " T_FAILS : " ALL PASS"))
