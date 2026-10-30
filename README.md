@@ -27,13 +27,13 @@
 | Windows 10 / 11 | Microsoft Japanese IME | AutoHotkey v2 | MIT |
 
 > [!WARNING]
-> **Stable release / 安定版 / 正式版 — v1.3.6**
+> **Stable release / 安定版 / 正式版 — v1.4.0**
 >
-> v1.3.6 is the current stable release. Stable means this version has been formally released; it does not imply perfect compatibility with every IME state, Windows configuration, or application. Please review the known limitations.
+> v1.4.0 is the current stable release. Stable means this version has been formally released; it does not imply perfect compatibility with every IME state, Windows configuration, or application. Please review the known limitations.
 >
-> v1.3.6 は現在の正式リリースです。安定版は正式にリリースされたバージョンを意味し、すべての IME 状態、Windows 環境、アプリケーションでの完全な互換性を保証するものではありません。既知の制限事項をご確認ください。
+> v1.4.0 は現在の正式リリースです。安定版は正式にリリースされたバージョンを意味し、すべての IME 状態、Windows 環境、アプリケーションでの完全な互換性を保証するものではありません。既知の制限事項をご確認ください。
 >
-> v1.3.6 是当前正式发布的稳定版本。“正式版”表示该版本已正式发布，并不意味着它能与所有输入法状态、Windows 配置和应用程序完美兼容。请先阅读已知限制。
+> v1.4.0 是当前正式发布的稳定版本。“正式版”表示该版本已正式发布，并不意味着它能与所有输入法状态、Windows 配置和应用程序完美兼容。请先阅读已知限制。
 
 ---
 
@@ -91,9 +91,10 @@
 | Key | English | 日本語 | 简体中文 |
 |---|---|---|---|
 | `A–Z` | Type romaji normally while the script tracks input. | ローマ字を通常どおり入力し、スクリプトが入力を追跡します。 | 正常输入罗马字，同时由脚本追踪输入状态。 |
-| `0–9` | Attempt candidate selection when tracked kana input exists; otherwise pass the digit through. | 追跡中のかな入力がある場合は候補選択を試み、それ以外では数字をそのまま通します。 | 存在被追踪的假名输入时尝试选择候选词，否则直接透传数字。 |
-| `=` | Send candidate-navigation keys to move forward. | 候補を進めるためのキー操作を送信します。 | 发送候选导航按键以向后移动。 |
-| `-` | Enter the long-vowel mark during normal input; move backward when page mode is active. | 通常入力時は長音記号を入力し、ページモード中は前の候補ページへ移動します。 | 普通输入时输入长音符号；翻页模式下向前翻页。 |
+| `0–9` / `Numpad 0–9` | Attempt candidate selection when a tracked kana composition exists; otherwise pass the digit through. Numpad digits are only taken over while NumLock is on. | 追跡中のかな入力がある場合は候補選択を試み、それ以外では数字をそのまま通します。テンキーは NumLock オン時のみ引き受けます。 | 存在被追踪的假名输入时尝试选择候选词，否则直接透传数字。小键盘仅在 NumLock 开启时接管。 |
+| `=` | Open the candidate list and move to the next page of candidates. Passed through unchanged when there is no kana composition. | 候補一覧を開き、次の候補ページへ進みます。かな入力の組み合わせが無いときは `=` をそのまま通します。 | 打开候选列表并翻到下一页。没有假名组合时 `=` 原样输出。 |
+| `-` | Enter the long-vowel mark during normal input; move to the previous candidate page when page mode is active. | 通常入力時は長音記号を入力し、ページモード中は前の候補ページへ移動します。 | 普通输入时输入长音符号；翻页模式下翻到上一页。 |
+| `Ctrl+Alt+K` | Pause / resume the script (also available from the tray menu). | スクリプトの一時停止 / 再開（トレイメニューからも操作可）。 | 暂停 / 恢复脚本（托盘菜单同样可用）。 |
 | `Backspace` | Delete normally while updating the tracked state. | 通常どおり削除しながら、追跡状態を更新します。 | 正常执行删除，同时更新脚本追踪状态。 |
 | `Enter` | Confirm input and reset the tracked state. | 入力を確定し、追跡状態をリセットします。 | 确认输入并重置追踪状态。 |
 | `Esc` | Cancel the current input and reset the tracked state. | 現在の入力を取り消し、追跡状態をリセットします。 | 取消当前输入并重置追踪状态。 |
@@ -104,6 +105,18 @@
 これらはスクリプトが想定するキー操作です。実際の候補選択や移動動作は、Microsoft IME の状態や候補表示によって異なる場合があります。
 
 以上为脚本设计的按键行为。实际候选词选择和导航效果取决于微软日语输入法当前的状态及候选列表布局。
+
+**Kana mode only / かな入力時のみ / 仅假名输入时：** every intercepted key is gated on the IME reporting kana (ひらがな / カタカナ) input. In 英数 / 直接入力 mode nothing is intercepted — no `{Down}`, no caret movement — and digits reach the application untouched. Where the IME mode cannot be read (some applications), the script falls back to inferring state from your keystrokes, as in v1.3.6.
+
+かな（ひらがな / カタカナ）入力中であると判定できたときだけキーを引き受けます。英数 / 直接入力時は何も引き受けず、`{Down}` も送りません。IME モードを取得できないアプリケーションでは、v1.3.6 と同じくキー入力からの推定に戻ります。
+
+只有在判定为かな（平假名/片假名）输入时才接管按键；英数/直接入力时什么都不接管，也不会发送 `{Down}`。在读不到输入法模式的应用里，退回 v1.3.6 的按键推断方式。
+
+**Tray menu / トレイメニュー / 托盘菜单：** pause / resume (checkable), live status display (debug, opens a floating panel at the bottom-right), interface language (简体中文 / 日本語 / English, remembered in `NoTabKana.ini`), reload, exit.
+
+一時停止 / 再開（チェック付き）、状態表示（デバッグ、右下にフロート表示）、表示言語（简体中文 / 日本語 / English、`NoTabKana.ini` に保存）、再読み込み、終了。
+
+暂停 / 恢复（可勾选）、状态显示（调试，右下角悬浮窗）、界面语言（简体中文 / 日本語 / English，记在 `NoTabKana.ini`）、重新加载、退出。
 
 ---
 
@@ -254,9 +267,9 @@ The intended result is `ビール`. The exact output depends on how the active I
 
 **简体中文**
 
-- 按 `=` 执行脚本配置的向后导航操作。
-- 翻页模式激活时，按 `-` 尝试向前翻页。
-- 按数字键尝试选择候选词。
+- 按 `=` 打开候选列表并翻到下一页。
+- 翻页模式激活时，按 `-` 翻到上一页。
+- 按数字键（含小键盘，NumLock 开启时）尝试选择候选词。
 
 > **Note / 注意 / 注意**
 > Candidate navigation is state-dependent. If the IME is not showing the expected candidate interface, the same key sequence may produce a different result.
@@ -345,6 +358,8 @@ Many Japanese input helper tools use IMM32 API such as `ImmGetCompositionStringW
 
 > Optional branch note:
 > An optional IMM API branch can be implemented for cross-checking kana state, but it **cannot replace the local romaji parser**. Removing local buffer entirely will lose unit backspace and romaji parsing features.
+>
+> **v1.4.0 — that branch now exists.** It reads only the IME conversion-mode bits (`ImmGetConversionStatus`; for TSF applications such as Chromium/Electron, `WM_IME_CONTROL` + `IMC_GETCONVERSIONMODE` / `IMC_GETOPENSTATUS` on the default IME window) to answer one question: is the IME in kana mode right now? It never reads composition text, so the local romaji buffer remains the source of truth for unit backspace.
 
 ### 🇯🇵 日本語
 
@@ -370,6 +385,8 @@ IMM32はWindows標準Microsoft IME向けのAPIです。Google日本語入力、A
 
 > 補足：
 > IMM APIをオプション機能として追加し、仮名の状態を検証する分岐は作成可能です。ただし**ローカルローマ字パーサーの代替にはなりません**。ローカルバッファを完全に削除しIME API依存にすると、単位バックスペースやローマ字解析機能が失われます。
+>
+> **v1.4.0 でこの分岐を実装しました。** 読むのは変換モードのビットのみ（`ImmGetConversionStatus`。Chromium/Electron などの TSF アプリでは既定 IME ウィンドウに対する `WM_IME_CONTROL` + `IMC_GETCONVERSIONMODE` / `IMC_GETOPENSTATUS`）で、「いまかな入力か」の判定だけに使います。変換中テキストは読まないため、単位バックスペースの正は従来どおりローカルバッファです。
 
 ### 🇨🇳 简体中文
 
@@ -400,6 +417,8 @@ IMM这套API是Windows微软自带日文IME专属。如果用户切换到 Google
 > ✅ 备选方案说明：
 > 理论上可以做「IMM API可选分支」，用API读取假名做状态校验，但**不能完全替换本地罗马音解析缓冲区**，只能作为辅助校正，无法替代核心逻辑。
 > 若强行完全移除本地缓冲区、全部依赖IME API，会直接丢失核心特性：**单元级智能退格、促音/拗音罗马音解析**。
+>
+> **v1.4.0 已实装这个分支。** 它读的不是假名文本，而是转换模式位（`ImmGetConversionStatus`；Chromium/Electron 等 TSF 应用走默认 IME 窗口的 `WM_IME_CONTROL` + `IMC_GETCONVERSIONMODE` / `IMC_GETOPENSTATUS`），只用来回答一个问题：现在是不是かな输入。它不读组合缓冲区，单元级退格仍以本地罗马音缓冲为准。
 
 ---
 
@@ -501,7 +520,7 @@ AutoHotkey.exe "NoTabKana.ahk" test
 
 Please keep the following limitations in mind:
 
-1. **IME state is inferred.** NoTabKana tracks keyboard input and does not directly read the IME's private composition buffer.
+1. **IME state is inferred.** NoTabKana tracks keyboard input and does not read the IME's private composition buffer. Since v1.4.0 it also reads the public IME conversion-mode bits to tell kana input from 英数 / 直接入力; in applications where that read fails, the script falls back to inferring state from keystrokes.
 2. **Candidate behavior varies.** Candidate order, candidate-window behavior, and navigation results depend on Microsoft Japanese IME.
 3. **Synthetic keys are not physical keystrokes.** Applications and IME components may process generated key events differently from physical keyboard input.
 4. **Editing can desynchronize the buffer.** Complex deletion, cursor movement, mouse interactions, or unusual input sequences may cause the internal state to diverge from the IME.
@@ -512,7 +531,7 @@ Please keep the following limitations in mind:
 
 次の制限事項にご注意ください。
 
-1. **IME 状態は推定値です。** NoTabKana はキーボード入力を追跡しますが、IME の非公開の変換バッファを直接読み取りません。
+1. **IME 状態は推定値です。** NoTabKana はキーボード入力を追跡しますが、IME の非公開の変換バッファは読み取りません。v1.4.0 以降は公開されている変換モードのビットも参照し「かな入力 / 英数・直接入力」を判定しますが、取得できないアプリケーションでは従来どおりキー入力からの推定に戻ります。
 2. **候補の動作は環境に依存します。** 候補の順序、候補ウィンドウの動作、移動結果は Microsoft 日本語 IME の状態によって異なります。
 3. **合成キー入力は物理キー入力と同じではありません。** アプリケーションや IME が、スクリプトから送信されたキーイベントを異なる方法で処理する場合があります。
 4. **編集操作で状態がずれる可能性があります。** 複雑な削除、カーソル移動、マウス操作、特殊な入力列によって、内部状態と IME の状態が一致しなくなる場合があります。
@@ -523,7 +542,7 @@ Please keep the following limitations in mind:
 
 请注意以下限制：
 
-1. **输入法状态是推测出来的。** NoTabKana 追踪键盘输入，但不会直接读取输入法的私有组合缓冲区。
+1. **输入法状态是推测出来的。** NoTabKana 追踪键盘输入，不读取输入法的私有组合缓冲区。v1.4.0 起还会读取公开的转换模式位来区分「かな输入」与「英数/直接入力」；在读不到的应用里仍退回按按键推断。
 2. **候选词行为因状态而异。** 候选顺序、候选窗口行为和导航结果取决于微软日语输入法的实际状态。
 3. **模拟按键不等于物理按键。** 应用程序和输入法组件可能会以不同方式处理脚本发送的按键事件。
 4. **编辑操作可能造成状态不同步。** 复杂删除、光标移动、鼠标操作或特殊输入序列，都可能导致脚本内部状态与输入法实际状态不一致。
@@ -537,6 +556,71 @@ Please keep the following limitations in mind:
 ## 🔄 Changelog / 更新履歴 / 更新日志
 
 ## Changelog
+### v1.4.0
+
+> Safety + usability release: no key is intercepted outside kana input, and every "why did nothing happen" state is now visible.
+
+> 安全性と使い勝手のリリース：かな入力以外では一切キーを引き受けず、「なぜ効かないか」が分かるようになりました。
+
+> 安全 + 易用版本：非假名输入时不再接管任何按键，并让“为什么没生效”一目了然。
+
+**简体中文**
+
+1. 【核心修复】数字键 / `=` / `-` 增加「当前是否为かな输入」判定。只读 IME 的转换模式位（`ImmGetConversionStatus`；Chromium / Electron 等 TSF 应用走默认 IME 窗口的 `WM_IME_CONTROL`），英数 / 直接入力模式下所有键原样放行。
+   - 修复实测问题：日文键盘处于英数模式时，打 `abc` 再按 `1`，脚本会发送 `{Down}` + `1` —— 光标下移一行并插入 `1`。
+   - 判据是「IME 打开状态 **且** `IME_CMODE_NATIVE`」。实测模式位在 IME 关闭后仍会保留（かな 与 英数 都是 `0x9` / `0x19`），只看模式位会继续误判。
+   - 读不到模式信息（部分应用）时退回 v1.3.6 的按键推断，不会因为读不到就整个失效。
+   - v1.3.6 的更新日志曾声称已实现该条件，实际代码未落地；本次补上。
+2. 【修复】没有真实假名组合时（包括只打了 `k` 这类未完成罗马音），`=` 原样输出，不再发送 `{Down}{PgDn}`。
+3. 【修复】罗马音解析支持 `tch`：`matcha` / `kotchi` 现在按 3 个假名计数（此前 `tch` 一族计数偏少，影响退格次数与候选门控）。
+4. 【新增】小键盘 `Numpad0-9` 也可选候选：NumLock 开启时接管，关闭时保留 End / Home 等导航键语义。
+5. 【新增】暂停 / 恢复：`Ctrl+Alt+K` 或托盘菜单。暂停时热键全部放行，并清空组合状态。
+6. 【新增】**状态显示（调试）**：从托盘打开后，右下角悬浮窗实时显示探针与计数，第二行直接给出当前判定（`かな组合中：按数字 = 选候选` / `英数 / 直接入力：数字不接管` / `非日语输入法：全部放行` / `かな输入，但还没打字母` / `只有未完成罗马音`）。暂停时同一个悬浮窗会常驻，避免把“暂停了”误判成“脚本坏了”。
+7. 【新增】托盘菜单支持 **简体中文 / 日本語 / English** 切换，菜单、气泡、悬浮窗同步变化；选择记在 `NoTabKana.ini`，无 ini 时跟随系统 UI 语言。
+8. 【优化】热键门控改为读缓存变量（看门狗每 200ms 刷新），按键路径不再重复 `WinActive` / `GetKeyboardLayout` 等 DllCall；真正要干预的键再按真实环境强制核对一次。
+9. 【工程】自检从 90 条扩到 146 条，`Chk` 改为类型严格比较（`"1"` 与 `1` 不再等价）；新增 CI（`windows-latest` + 官方 ahk-v2 便携版，按退出码判定）。
+10. 【工程】文件名固定为 `NoTabKana.ahk`（版本交给脚本内 `SCRIPT_VERSION` 与 Releases）；单实例互斥体改为稳定名，并探测旧版 v1.3.x —— 旧版在跑时提示先退出，避免两个实例重复发键。
+11. 【文档】README 修正 `=` 的中文说明（“向后移动” → “打开候选列表并翻到下一页”）；Known Limitations 与“为何不调用 IMM32”一节补充“只读模式位”的实际实装说明。
+12. 【注意】英数模式下数字键不再被接管，这是本次修复的目的（依赖旧行为的人会感觉“功能没了”）。另外，用 `Space` 确定之后立即按数字仍可能发送 `{Down}`（与 v1.3.6 相同，本次未改）。
+
+**English**
+
+1. 【Core Fix】Number keys / `=` / `-` now check whether the IME is actually in kana mode. Only the IME conversion-mode bits are read (`ImmGetConversionStatus`; for TSF applications such as Chromium / Electron, `WM_IME_CONTROL` on the default IME window). In 英数 / 直接入力 mode every key passes through untouched.
+   - Fixes a measured bug: with the Japanese layout in 英数 mode, typing `abc` then `1` made the script send `{Down}` + `1` — the caret moved down a line and `1` was inserted.
+   - The rule is "IME open **and** `IME_CMODE_NATIVE`". Measured behaviour: the mode bits are preserved while the IME is closed (both kana and 英数 report `0x9` / `0x19`), so looking at the mode bits alone still misjudges.
+   - In applications where the mode cannot be read, the script falls back to the v1.3.6 keystroke heuristic instead of failing outright.
+   - The v1.3.6 changelog claimed this condition; the code did not implement it. This release does.
+2. 【Fix】With no real kana composition (including a pending romaji tail such as `k`), `=` now outputs `=` instead of sending `{Down}{PgDn}`.
+3. 【Fix】The romaji parser handles `tch`: `matcha` / `kotchi` now count as 3 kana (the `tch` family previously under-counted, which affected backspace counts and candidate gating).
+4. 【New】Numpad `0–9` can also select candidates — taken over while NumLock is on, leaving End / Home navigation intact when it is off.
+5. 【New】Pause / resume via `Ctrl+Alt+K` or the tray menu. While paused every hotkey passes through and the tracked composition state is cleared.
+6. 【New】**Status display (debug)**: once enabled from the tray, a bottom-right overlay shows live probe values and counters, and its second line states the current verdict (`Kana composing: digits select candidates` / `英数 / direct input: digits pass through` / `Not a Japanese IME: everything passes through` / `Kana mode but no romaji yet` / `Only a pending romaji tail`). The same overlay stays on while paused, so "I paused it" is not mistaken for "it broke".
+7. 【New】The tray menu can switch between **简体中文 / 日本語 / English**; labels, toasts and the overlay follow, and the choice is remembered in `NoTabKana.ini` (falls back to the system UI language).
+8. 【Optimization】Hotkey conditions now read cached values refreshed by the watchdog every 200 ms instead of calling `WinActive` / `GetKeyboardLayout` on every keystroke; only keys that are actually intercepted are re-checked against the live environment.
+9. 【Project】Self-test grows from 90 to 146 assertions, `Chk` becomes type-strict (`"1"` no longer equals `1`), and CI is added (`windows-latest` + the official ahk-v2 portable build, gated on the exit code).
+10. 【Project】The script filename is fixed as `NoTabKana.ahk` (the version lives in `SCRIPT_VERSION` and in Releases). The single-instance mutex now has a stable name and also probes for v1.3.x, showing a notice when an old instance is running instead of double-sending keys.
+11. 【Docs】README: the Chinese description of `=` changed from "move backward" to "open the candidate list and jump to the next page"; the Known Limitations and "why not IMM32" sections now document the read-only mode-bit check.
+12. 【Note】Digits are no longer intercepted in 英数 mode — that is the point of this fix (anyone relying on the old behaviour will notice). Separately, a digit pressed immediately after committing with `Space` can still send `{Down}` (same as v1.3.6, unchanged).
+
+**日本語**
+
+1. 【重要修正】数字キー / `=` / `-` は「いまかな入力か」を判定するようにしました。読むのは IME の変換モードビットのみ（`ImmGetConversionStatus`。Chromium / Electron などの TSF アプリでは既定 IME ウィンドウへの `WM_IME_CONTROL`）。英数・直接入力時はすべて素通しになります。
+   - 実測バグの修正：日本語キーボードが英数モードのとき、`abc` の後に `1` を押すと、スクリプトが `{Down}` + `1` を送り、カーソルが次の行へ移動して `1` が入っていました。
+   - 判定は「IME がオン **かつ** `IME_CMODE_NATIVE`」。実測では IME を閉じてもモードビットは保持される（かな も 英数 も `0x9` / `0x19`）ため、モードビットだけを見ると誤判定が続きます。
+   - モードを取得できないアプリケーションでは v1.3.6 と同じキー入力からの推定に戻ります（読めないことを理由に機能全体が止まることはありません）。
+   - v1.3.6 の更新履歴はこの条件を実装済みとしていましたが、コードには入っていませんでした。本リリースで実装します。
+2. 【修正】実際のかな入力が無いとき（`k` だけ打った未確定ローマ字を含む）は、`=` が `{Down}{PgDn}` を送らず `=` をそのまま出力します。
+3. 【修正】ローマ字解析が `tch` に対応：`matcha` / `kotchi` は 3 仮名として数えます（従来は `tch` 系のカウントが不足し、バックスペース回数と候補制御に影響していました）。
+4. 【追加】テンキー `0–9` でも候補選択が可能になりました。NumLock オン時のみ引き受け、オフ時は End / Home などのキー動作を維持します。
+5. 【追加】一時停止 / 再開：`Ctrl+Alt+K` またはトレイメニュー。一時停止中はすべてのホットキーを素通しし、追跡中の組み合わせ状態もクリアします。
+6. 【追加】**状態表示（デバッグ）**：トレイから有効にすると、右下のフロートに読み取り値とカウンタをリアルタイム表示し、2 行目に現在の判定を出します（`かな変換中：数字キー = 候補選択` / `英数・直接入力：数字は素通し` / `日本語 IME 以外：すべて素通し` / `かな入力だが未入力` / `未確定ローマ字のみ`）。一時停止中は同じフロートが常駐するので、「止めた」を「壊れた」と誤解しません。
+7. 【追加】トレイメニューは **简体中文 / 日本語 / English** を切り替え可能。メニュー文言・トースト・フロート表示が追従し、選択は `NoTabKana.ini` に保存（ini が無ければシステムの UI 言語に従う）。
+8. 【最適化】ホットキーの条件判定は、ウォッチドッグが 200ms ごとに更新するキャッシュ変数の参照に変更しました。キー入力のたびに `WinActive` / `GetKeyboardLayout` を呼ばず、実際に介入するキーだけ実環境で再確認します。
+9. 【プロジェクト】セルフテストは 90 件から 146 件に拡張し、`Chk` を型厳密比較に変更（`"1"` と `1` は非同値）。CI を追加（`windows-latest` + 公式 ahk-v2 ポータブル、終了コードで判定）。
+10. 【プロジェクト】スクリプト名を `NoTabKana.ahk` に固定（バージョンは `SCRIPT_VERSION` と Releases で管理）。単一インスタンスのミューテックス名を安定化し、v1.3.x の存在も検出するようにしました — 旧版が動作中の場合は先に終了するよう促し、二重送信を防ぎます。
+11. 【ドキュメント】README：`=` の中国語説明を「後ろへ移動」から「候補一覧を開いて次ページへ」に修正。既知の制限と「IMM32 を使わない理由」の節に、モードビットのみを読む実装を追記しました。
+12. 【注意】英数モードでは数字キーを引き受けなくなりました（これが本修正の目的です。旧動作に依存していた場合は「機能が減った」と感じます）。また、`Space` で確定した直後に数字を押すと `{Down}` が送られる場合があります（v1.3.6 と同じ、今回は未修正）。
+
 ### v1.3.6
 > Optimization release, bugfix only, no new features. Fully backward compatible with
 
@@ -599,6 +683,9 @@ Please keep the following limitations in mind:
 - 候補操作の開始方法を `Tab` から `Down` に変更しました。
 - セルフテストモードを追加しました。
 - 入力状態の追跡とリセット処理を調整しました。
+
+<a id="troubleshooting"></a>
+
 ## 🛠️ Troubleshooting / トラブルシューティング / 故障排查
 
 ### 🇬🇧 English
